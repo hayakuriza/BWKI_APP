@@ -5,4 +5,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="hello">Hello Fragment</string>
     <string name="about">About</string>
+    <string name="tut_text1">Vielen Dank, dass ihr diese App nutzt.... blablabla</string>
+    <string name="next">Weiter</string>
+    <string name="string_button_finish">Alles klar!</string>
+    <string name="string_zurueck">Zurück</string>
 </resources>

@@ -2,16 +2,27 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools" android:id="@+id/navigation" app:startDestination="@id/mainScreenFragment">
-    <fragment android:id="@+id/placeholder"/>
     <fragment android:id="@+id/mainScreenFragment" android:name="de.bwki.blumenidentifikator.MainScreenFragment"
               android:label="MainScreenFragment">
-        <action android:id="@+id/action_mainScreenFragment_to_tutorial1Fragment2"
+        <action android:id="@+id/action_mainScreenFragment_to_tutorial1Fragment"
                 app:destination="@id/tutorial1Fragment" app:enterAnim="@anim/slide_in_right"
                 app:exitAnim="@anim/slide_in_left" app:popEnterAnim="@anim/slide_in_right"
-                app:popExitAnim="@anim/slide_in_left"/>
+                app:popExitAnim="@anim/slide_in_left" app:popUpTo="@+id/tutorial1Fragment"/>
     </fragment>
     <fragment android:id="@+id/aboutFragment" android:name="de.bwki.blumenidentifikator.AboutFragment"
               android:label="fragment_about" tools:layout="@layout/fragment_about"/>
     <fragment android:id="@+id/tutorial1Fragment" android:name="de.bwki.blumenidentifikator.Tutorial1Fragment"
-              android:label="Tutorial1Fragment"/>
+              android:label="Tutorial1Fragment">
+        <action android:id="@+id/action_tutorial1Fragment_to_tutorial2Fragment"
+                app:destination="@id/tutorial2Fragment" app:enterAnim="@anim/slide_in_right"
+                app:exitAnim="@anim/slide_in_left" app:popEnterAnim="@anim/slide_in_right"
+                app:popExitAnim="@anim/slide_in_left" app:popUpTo="@+id/tutorial1Fragment"/>
+    </fragment>
+    <fragment android:id="@+id/tutorial2Fragment" android:name="de.bwki.blumenidentifikator.Tutorial2Fragment"
+              android:label="Tutorial2Fragment">
+        <action android:id="@+id/action_tutorial2Fragment_to_mainScreenFragment"
+                app:destination="@id/mainScreenFragment" app:enterAnim="@anim/slide_in_right"
+                app:exitAnim="@anim/slide_in_left" app:popEnterAnim="@anim/slide_in_right"
+                app:popExitAnim="@anim/slide_in_left"/>
+    </fragment>
 </navigation>

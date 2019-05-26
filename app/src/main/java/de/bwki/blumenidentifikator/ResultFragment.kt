@@ -6,19 +6,23 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.drawerlayout.widget.DrawerLayout
-
+import android.widget.TextView
 
 /**
- * A simple [Fragment] subclass.
+ * Hier werden die Ergebnisse des Netzes angezeigt.
+ * Das Bild bekommt er vom MainScreenModel und wird hier verarbeitet.
  *
  */
-class AboutFragment : Fragment(), MainActivity.GlobalMethods {
+class ResultFragment : Fragment() {
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_about, container, false)
+        return TextView(activity).apply {
+            setText(R.string.hello_blank_fragment)
+        }
     }
+
+
 }
