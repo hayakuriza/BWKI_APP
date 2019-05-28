@@ -13,6 +13,7 @@
                 android:layout_height="321dp" app:srcCompat="@android:color/background_light"
                 android:id="@+id/imageView" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
                 app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
-                android:layout_marginTop="40dp" app:layout_constraintTop_toTopOf="parent" style="@style/imageView"/>
+                android:layout_marginTop="40dp" app:layout_constraintTop_toTopOf="parent" style="@style/imageView"
+                android:rotation="90"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
