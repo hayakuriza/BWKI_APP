@@ -4,6 +4,7 @@ package de.bwki.blumenidentifikator
 import android.app.Activity
 import android.app.Application
 import android.content.SharedPreferences
+import android.media.Image
 import androidx.databinding.DataBindingUtil
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -18,6 +19,7 @@ import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import java.io.File
 
 //lateinit var binding : ActivityMainBinding
 
@@ -59,6 +61,17 @@ class MainActivity : AppCompatActivity() {
         fun lockDrawer() {
             drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         }
+    }
 
+    interface Images {
+        var image : File
+
+        fun setFileVar(file: File){
+            this.image = file
+        }
+
+        fun getFileVar():File{
+            return image
+        }
     }
 }

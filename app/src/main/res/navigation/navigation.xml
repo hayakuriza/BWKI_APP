@@ -8,6 +8,7 @@
                 app:destination="@id/tutorial1Fragment" app:enterAnim="@anim/slide_in_right"
                 app:exitAnim="@anim/slide_in_left" app:popEnterAnim="@anim/slide_in_right"
                 app:popExitAnim="@anim/slide_in_left" app:popUpTo="@+id/tutorial1Fragment"/>
+        <action android:id="@+id/action_mainScreenFragment_to_resultFragment" app:destination="@id/resultFragment"/>
     </fragment>
     <fragment android:id="@+id/aboutFragment" android:name="de.bwki.blumenidentifikator.AboutFragment"
               android:label="fragment_about" tools:layout="@layout/fragment_about"/>
@@ -24,5 +25,9 @@
                 app:destination="@id/mainScreenFragment" app:enterAnim="@anim/slide_in_right"
                 app:exitAnim="@anim/slide_in_left" app:popEnterAnim="@anim/slide_in_right"
                 app:popExitAnim="@anim/slide_in_left"/>
+    </fragment>
+    <fragment android:id="@+id/resultFragment" android:name="de.bwki.blumenidentifikator.ResultFragment"
+              android:label="ResultFragment">
+        <argument android:name="filePath" app:argType="string"/>
     </fragment>
 </navigation>

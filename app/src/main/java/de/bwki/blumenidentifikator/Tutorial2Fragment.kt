@@ -33,7 +33,6 @@ class Tutorial2Fragment : Fragment(), MainActivity.GlobalMethods {
         binding.buttonFinish.setOnClickListener{view: View ->
             getPrefs().edit().putBoolean("firstStart", true).apply()
             requestPermissions(arrayOf(Manifest.permission.CAMERA), 10)
-            view.findNavController().navigate(R.id.action_tutorial2Fragment_to_mainScreenFragment)
         }
 
         binding.buttonZurueck.setOnClickListener{
@@ -41,4 +40,9 @@ class Tutorial2Fragment : Fragment(), MainActivity.GlobalMethods {
         }
         return binding.root
         }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        view!!.findNavController().navigate(R.id.action_tutorial2Fragment_to_mainScreenFragment)
+    }
 }

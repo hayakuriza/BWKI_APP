@@ -7,16 +7,26 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.util.Log
+import android.util.Rational
+import android.util.Size
+import android.view.Surface
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.camera.camera2.impl.PreviewConfigProvider
+import androidx.camera.core.ImageCapture
+import androidx.camera.core.ImageCaptureConfig
+import androidx.camera.core.Preview
+import androidx.camera.core.PreviewConfig
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.requestPermissions
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
+import de.bwki.blumenidentifikator.MainActivity.GlobalMethods
 
 // Hier steht die ganze Logik
 
-class MainScreenModel: ViewModel(), MainActivity.GlobalMethods {
+class MainScreenModel(application: Application): AndroidViewModel(application), GlobalMethods{
 
     private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
     private val REQUEST_CODE = 10
@@ -31,21 +41,23 @@ class MainScreenModel: ViewModel(), MainActivity.GlobalMethods {
     }
 
     // Für Kamera
-    fun startCamera() {
+    fun startCamera(): Preview {
+        // Config Object
+        val previewConfig = PreviewConfig.Builder().apply() {
+            setTargetAspectRatio(Rational(1,1))
+            setTargetResolution(Size(640,640))
+        }.build()
 
-    }
-
-    fun updateTransform() {
-
-    }
-
-    fun allPermissionsGranted(context: Context): Boolean {
-        for (permission in REQUIRED_PERMISSIONS) {
-            if (ContextCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
-                return false
-            }
+        return Preview(previewConfig)
         }
-        return true
+
+    fun cameraStart2(): ImageCaptureConfig {
+        val imageCaptureConfig = ImageCaptureConfig.Builder().apply {
+            setTargetAspectRatio(Rational(1,1))
+            setCaptureMode(ImageCapture.CaptureMode.MIN_LATENCY)
+            setTargetRotation(Surface.ROTATION_0)
+        }.build()
+        return imageCaptureConfig
     }
 
     fun checkFirstStart(): Boolean{
