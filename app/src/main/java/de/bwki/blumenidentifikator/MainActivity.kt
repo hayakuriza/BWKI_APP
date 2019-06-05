@@ -1,24 +1,17 @@
 package de.bwki.blumenidentifikator
 // TODO: Ändere Paketname zum Teamnamen
+// TODO: Aufräumen ._.
 
-import android.app.Activity
-import android.app.Application
 import android.content.SharedPreferences
-import android.media.Image
-import androidx.databinding.DataBindingUtil
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import androidx.core.app.ActivityCompat.requestPermissions
-import de.bwki.blumenidentifikator.databinding.ActivityMainBinding
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil.setContentView
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
-import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import de.bwki.blumenidentifikator.databinding.ActivityMainBinding
 import java.io.File
 
 //lateinit var binding : ActivityMainBinding
@@ -27,6 +20,7 @@ import java.io.File
 private lateinit var drawerLayout: DrawerLayout
 private lateinit var appBarConfiguration: AppBarConfiguration
 private lateinit var prefs: SharedPreferences
+private lateinit var imageClassification: ImageClassification
 
 class MainActivity : AppCompatActivity() {
 

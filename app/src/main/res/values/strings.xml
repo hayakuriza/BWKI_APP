@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">Blumenidentifikator</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="hello">Hello Fragment</string>
     <string name="about">About</string>
@@ -10,4 +8,7 @@
     <string name="string_button_finish">Alles klar!</string>
     <string name="string_zurueck">Zurück</string>
     <string name="permissiob_not_granted">Die App hat keine Berechtigung für die Kamera, bitte manuell in den App-Einstellungen erteilen.</string>
+    <string name="useInternetInfos">Sollen aus dem Internet weitere Informationen geladen werden?</string>
+    <string name="weitere_infos">Weitere Informationen laden?</string>
+    <string name="settings">Einstellungen</string>
 </resources>

@@ -1,28 +1,23 @@
 package de.bwki.blumenidentifikator
 
+import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.view.*
-import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
-import androidx.databinding.DataBindingUtil
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.NavigationUI.onNavDestinationSelected
-import de.bwki.blumenidentifikator.databinding.FragmentMainScreenBinding
-import android.Manifest
-import android.graphics.drawable.BitmapDrawable
-import android.media.Image
-import android.os.Parcelable
 import android.util.Log
+import android.view.*
 import android.widget.Toast
 import androidx.camera.core.CameraX
 import androidx.camera.core.ImageCapture
-import androidx.camera.core.ImageProxy
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.NavigationUI.onNavDestinationSelected
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.parcel.Parcelize
+import de.bwki.blumenidentifikator.databinding.FragmentMainScreenBinding
 import java.io.File
 
 /**

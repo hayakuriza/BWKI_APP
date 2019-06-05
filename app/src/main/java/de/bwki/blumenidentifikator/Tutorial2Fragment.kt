@@ -1,20 +1,17 @@
 package de.bwki.blumenidentifikator
 
 
+import android.Manifest
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.databinding.DataBindingUtil.inflate
-import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import de.bwki.blumenidentifikator.databinding.FragmentTutorial2Binding
-import android.Manifest
-import android.content.SharedPreferences
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
+import de.bwki.blumenidentifikator.databinding.FragmentTutorial2Binding
 import kotlinx.android.synthetic.main.activity_main.*
 
 /**
@@ -31,7 +28,10 @@ class Tutorial2Fragment : Fragment(), MainActivity.GlobalMethods {
         lockDrawer()
 
         binding.buttonFinish.setOnClickListener{view: View ->
+            //Hier werden alle Einstellungen auf ihre Standardwerte gesetzt,
+            // da diese Methode nur ein einziges Mal aufgerufen wird
             getPrefs().edit().putBoolean("firstStart", true).apply()
+            getPrefs().edit().putBoolean("useInternetInfos", true).apply()
             requestPermissions(arrayOf(Manifest.permission.CAMERA), 10)
         }
 
