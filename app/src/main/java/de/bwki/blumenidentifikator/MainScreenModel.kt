@@ -5,7 +5,6 @@ import android.app.Application
 import android.util.Log
 import android.util.Rational
 import android.util.Size
-import android.view.Surface
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureConfig
 import androidx.camera.core.Preview
@@ -32,21 +31,20 @@ class MainScreenModel(application: Application): AndroidViewModel(application), 
     // Für Kamera
     fun startCamera(): Preview {
         // Config Object
-        val previewConfig = PreviewConfig.Builder().apply() {
+        val previewConfig = PreviewConfig.Builder().apply {
             setTargetAspectRatio(Rational(1,1))
-            setTargetResolution(Size(640,640))
+            setTargetResolution(Size(224,224))
         }.build()
 
         return Preview(previewConfig)
         }
 
     fun cameraStart2(): ImageCaptureConfig {
-        val imageCaptureConfig = ImageCaptureConfig.Builder().apply {
+        return ImageCaptureConfig.Builder().apply {
             setTargetAspectRatio(Rational(1,1))
             setCaptureMode(ImageCapture.CaptureMode.MIN_LATENCY)
-            setTargetRotation(Surface.ROTATION_0)
+            setTargetResolution(Size(224, 224))
         }.build()
-        return imageCaptureConfig
     }
 
     fun checkFirstStart(): Boolean{

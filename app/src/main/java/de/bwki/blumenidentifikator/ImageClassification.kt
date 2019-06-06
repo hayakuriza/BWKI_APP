@@ -13,20 +13,28 @@ enum class ClassifierModel {
     QUANTIZED
 }
 
+enum class Device {
+    CPU,
+    NNAPI,
+    GPU
+}
+
 abstract class ImageClassification protected constructor(
     val interpreter: Interpreter,
     val labelList: List<String>,
     val inputSize: Int,
     val numberOfResults: Int,
     val confidenceThreshold: Float
-){
+) {
     protected val imageByteBuffer: ByteBuffer by lazy {
-        ByteBuffer.allocateDirect(byteNumbersPerChannel() * BATCH_SIZE * inputSize* inputSize * PIXEL_SIZE)
+       // ByteBuffer.allocateDirect(byteNumbersPerChannel() * BATCH_SIZE * inputSize * inputSize * PIXEL_SIZE)
+        //    .order(nativeOrder())
+        ByteBuffer.allocateDirect(byteNumbersPerChannel() * BATCH_SIZE * inputSize * inputSize * PIXEL_SIZE)
             .order(nativeOrder())
     }
 
     //TODO Typ anpassen?
-    fun classifyImage(bitmap: Bitmap):List<Recognizable> {
+    fun classifyImage(bitmap: Bitmap): List<Recognizable> {
         convertBitmapToByteBuffer(bitmap)
         runInterpreter()
         return getResult()
@@ -57,7 +65,7 @@ abstract class ImageClassification protected constructor(
         imageByteBuffer.rewind()
 
         val emptyIntArray = IntArray(inputSize * inputSize)
-        bitmap.getPixels(emptyIntArray,0,bitmap.width,0,0,bitmap.width,bitmap.height)
+        bitmap.getPixels(emptyIntArray, 0, bitmap.width, 0, 0, bitmap.width, bitmap.height)
         var pixel = 0
         for (x in 0 until inputSize) {
             for (y in 0 until inputSize) {
@@ -70,7 +78,7 @@ abstract class ImageClassification protected constructor(
     private fun getResult(): List<Recognizable> {
         val priorityQueue = priorityQueue<Recognizable>(
             numberOfResults,
-            Comparator{ o1, o2 ->
+            Comparator { o1, o2 ->
                 o2.confidence.compareTo(o1.confidence)
             })
 
@@ -91,49 +99,51 @@ abstract class ImageClassification protected constructor(
     }
 
 
-    /**
-     * Factory method, which returns [ImageClassification] based on the model type [ClassifierModel].
-     *
-     * [assetManager] provides access to an application's raw asset files.
-     * [modelPath] the path name of the model.
-     * [labelList] the labels list name.
-     * [inputSize] the size that is used in the model.
-     * [interpreterOptions] the options that will be used by [Interpreter].
-     * [numberOfResults] the number of results to show.
-     * [confidenceThreshold] the threshold confidence, [classifyImage] will return results whose confidence more than this value.
-     *
-     */
-    fun create(
-        classifierModel: ClassifierModel,
-        assetManager: AssetManager,
-        modelPath: String,
-        labelPath: String,
-        inputSize: Int = DEFAULT_INPUT_SIZE,
-        interpreterOptions: Interpreter.Options = Interpreter.Options(),
-        numberOfResults: Int = DEFAULT_MAX_RESULTS,
-        confidenceThreshold: Float = DEFAULT_CONFIDENCE_THRESHOLD
-    ): ImageClassification {
+    companion object {
+        /**
+         * Factory method, which returns [ImageClassification] based on the model type [ClassifierModel].
+         *
+         * [assetManager] provides access to an application's raw asset files.
+         * [modelPath] the path name of the model.
+         * [labelList] the labels list name.
+         * [inputSize] the size that is used in the model.
+         * [interpreterOptions] the options that will be used by [Interpreter].
+         * [numberOfResults] the number of results to show.
+         * [confidenceThreshold] the threshold confidence, [classifyImage] will return results whose confidence more than this value.
+         *
+         */
+        fun create(
+            classifierModel: ClassifierModel,
+            assetManager: AssetManager,
+            modelPath: String = MODEL_FILE_PATH,
+            labelPath: String = LABELS_FILE_PATH,
+            inputSize: Int = DEFAULT_INPUT_SIZE,
+            interpreterOptions: Interpreter.Options = Interpreter.Options(),
+            numberOfResults: Int = DEFAULT_MAX_RESULTS,
+            confidenceThreshold: Float = DEFAULT_CONFIDENCE_THRESHOLD
+        ): ImageClassification {
 
-        val interpreter = Interpreter(
-            assetManager.loadModelFile(modelPath),
-            interpreterOptions
-        )
+            val interpreter = Interpreter(
+                assetManager.loadModelFile(modelPath),
+                interpreterOptions
+            )
 
-        return when (classifierModel) {
-            ClassifierModel.QUANTIZED -> QuantizedClassifier(
-                interpreter = interpreter,
-                labelList = assetManager.loadLabelList(labelPath),
-                inputSize = inputSize,
-                numberOfResults = numberOfResults,
-                confidenceThreshold = confidenceThreshold
-            )
-            ClassifierModel.FLOAT -> FloatClassifier(
-                interpreter = interpreter,
-                labelList = assetManager.loadLabelList(labelPath),
-                inputSize = inputSize,
-                numberOfResults = numberOfResults,
-                confidenceThreshold = confidenceThreshold
-            )
+            return when (classifierModel) {
+                ClassifierModel.QUANTIZED -> FloatClassifier(
+                    interpreter = interpreter,
+                    labelList = assetManager.loadLabelList(labelPath),
+                    inputSize = inputSize,
+                    numberOfResults = numberOfResults,
+                    confidenceThreshold = confidenceThreshold
+                )
+                ClassifierModel.FLOAT -> FloatClassifier(
+                    interpreter = interpreter,
+                    labelList = assetManager.loadLabelList(labelPath),
+                    inputSize = inputSize,
+                    numberOfResults = numberOfResults,
+                    confidenceThreshold = confidenceThreshold
+                )
+            }
         }
     }
 }

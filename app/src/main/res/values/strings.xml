@@ -11,4 +11,5 @@
     <string name="useInternetInfos">Sollen aus dem Internet weitere Informationen geladen werden?</string>
     <string name="weitere_infos">Weitere Informationen laden?</string>
     <string name="settings">Einstellungen</string>
+    <string name="flower_image">Foto der Blume</string>
 </resources>

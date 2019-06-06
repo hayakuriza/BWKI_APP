@@ -26,13 +26,12 @@ import java.io.File
  *
  */
 
-class MainScreenFragment: Fragment(), MainActivity.GlobalMethods, MainActivity.Images {
+class MainScreenFragment: Fragment(), MainActivity.GlobalMethods {
 
     private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
     private val REQUEST_CODE = 10
     private lateinit var viewFinder: TextureView
     lateinit var viewModel: MainScreenModel
-    override var image: File = getFileVar()
 
 
     override fun onCreateView(
@@ -49,6 +48,7 @@ class MainScreenFragment: Fragment(), MainActivity.GlobalMethods, MainActivity.I
         val application = requireNotNull(this.activity).application
         val viewModelFactory = MainScreenModelFactory(application)
         setHasOptionsMenu(true) //Overflow Menu
+
 
         // ViewModel
         val viewModel = ViewModelProviders.of(this, viewModelFactory).get(MainScreenModel::class.java)
@@ -95,6 +95,33 @@ class MainScreenFragment: Fragment(), MainActivity.GlobalMethods, MainActivity.I
                 }
             })
         }
+
+        /* binding.imageButton.setOnClickListener {
+            imageCapture.takePicture(object : ImageCapture.OnImageCapturedListener() {
+                override fun onError(
+                    error: ImageCapture.UseCaseError,
+                    message: String, exc: Throwable?
+                ) {
+                    val msg = "Photo capture failed: $message"
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+                    Log.e("CameraXApp", msg)
+                    exc?.printStackTrace()
+                }
+
+                override fun onCaptureSuccess(image: ImageProxy?, rotationDegrees: Int) {
+                    Log.d("CameraX", "Success")
+                    val buffer: ByteBuffer = image!!.image!!.planes[0].buffer
+                    val bytes = ByteArray(buffer.remaining())
+                    buffer.get(bytes)
+                    val bundle = Bundle()
+                    bundle.putParcelable("image", BitmapFactory.decodeByteArray(bytes,0,bytes.size))
+                   // val format = image.format
+                   // Log.e("CameraX", "Format: $format")
+                    findNavController().navigate(R.id.action_mainScreenFragment_to_resultFragment, bundle)
+                }
+            })
+        } */
+
         CameraX.bindToLifecycle(this, preview, imageCapture)
 
         if (allPermissionsGranted()) {
