@@ -16,7 +16,19 @@ class ResultScreenModel: ViewModel(), MainActivity.GlobalMethods, CoroutineScope
     private lateinit var imageClassification : ImageClassification
     private lateinit var classifier: ImageClassifier
 
-    private var resultList = MutableLiveData<Array<String>>()
+    var resultText1 = MutableLiveData<String>()
+    var progress1 = MutableLiveData<Int>()
+    var resultText2 = MutableLiveData<String>()
+    var progress2 = MutableLiveData<Int>()
+    var visibil2 = MutableLiveData<String>()
+    var resultText3 = MutableLiveData<String>()
+    var progress3 = MutableLiveData<Int>()
+    var visibil3 = MutableLiveData<String>()
+
+
+
+    val resultList = MutableLiveData<List<Recognizable>>()
+
     var done = false
     val resultText = MutableLiveData<String>()
 
@@ -27,6 +39,7 @@ class ResultScreenModel: ViewModel(), MainActivity.GlobalMethods, CoroutineScope
         uiScope.launch {
             // Do something
             doSomethinginCoroutine()
+
 
             done = true
         }
@@ -45,6 +58,8 @@ class ResultScreenModel: ViewModel(), MainActivity.GlobalMethods, CoroutineScope
     }
 
     init {
+        visibil2.value = "GONE"
+        visibil3.value = "GONE"
     }
 
     fun loadModule(){
@@ -63,11 +78,26 @@ class ResultScreenModel: ViewModel(), MainActivity.GlobalMethods, CoroutineScope
 
     fun classify(bitmap:Bitmap) = launch {
         val results = async { imageClassification.classifyImage(bitmap) }
-       // resultText = results.toString()
+        var done = false
+
         Log.d("Results", results.await().toString())
         withContext(Dispatchers.Main){
-           var restul = results.await().toString()
+         //   resultText.value = results.await().toString()
+         //   resultList.value = results.await()
+            resultText1.value = results.await()[0].toString()
+            progress1.value = (results.await()[0].confidence * 100).toInt()
+
+            Log.d("Results", results.await().size.toString())
+            if (results.await().size > 1){
+                resultText2.value = results.await()[1].toString()
+                progress2.value = (results.await()[1].confidence * 100).toInt()
+                visibil2.value = "VISIBLE"
+            }; if (results.await().size > 2) {
+                resultText3.value = results.await()[2].toString()
+                progress3.value = (results.await()[2].confidence * 100).toInt()
+                visibil3.value = "VISIBLE"
+             }
+            done = true
         }
     }
-
 }

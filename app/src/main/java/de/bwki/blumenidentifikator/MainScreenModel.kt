@@ -33,7 +33,7 @@ class MainScreenModel(application: Application): AndroidViewModel(application), 
         // Config Object
         val previewConfig = PreviewConfig.Builder().apply {
             setTargetAspectRatio(Rational(1,1))
-            setTargetResolution(Size(224,224))
+            setTargetResolution(Size(640,640))
         }.build()
 
         return Preview(previewConfig)

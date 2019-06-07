@@ -17,6 +17,8 @@ package de.bwki.blumenidentifikator
 import android.content.res.AssetManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import java.io.*
 import java.nio.MappedByteBuffer
 import java.nio.channels.FileChannel
@@ -53,3 +55,5 @@ fun AssetManager.loadLabelList(labelPath: String): List<String> {
     }
     return labelList
 }
+
+class TextItemViewHolder(val textView: TextView): RecyclerView.ViewHolder(textView)
