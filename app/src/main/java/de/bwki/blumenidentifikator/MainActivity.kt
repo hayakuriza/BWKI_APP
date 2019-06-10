@@ -1,4 +1,5 @@
 package de.bwki.blumenidentifikator
+
 // TODO: Ändere Paketname zum Teamnamen
 // TODO: Aufräumen ._.
 
@@ -47,7 +48,7 @@ class MainActivity : AppCompatActivity() {
 
     // Methoden für Fragments
     interface GlobalMethods {
-        fun getPrefs(): SharedPreferences{
+        fun getPrefs(): SharedPreferences {
             return prefs
         }
 
@@ -55,7 +56,7 @@ class MainActivity : AppCompatActivity() {
             drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         }
 
-        fun getAsset(): AssetManager{
+        fun getAsset(): AssetManager {
             return asset
         }
     }

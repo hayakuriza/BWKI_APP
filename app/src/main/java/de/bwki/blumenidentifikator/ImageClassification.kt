@@ -27,7 +27,7 @@ abstract class ImageClassification protected constructor(
     val confidenceThreshold: Float
 ) {
     protected val imageByteBuffer: ByteBuffer by lazy {
-       // ByteBuffer.allocateDirect(byteNumbersPerChannel() * BATCH_SIZE * inputSize * inputSize * PIXEL_SIZE)
+        // ByteBuffer.allocateDirect(byteNumbersPerChannel() * BATCH_SIZE * inputSize * inputSize * PIXEL_SIZE)
         //    .order(nativeOrder())
         ByteBuffer.allocateDirect(byteNumbersPerChannel() * BATCH_SIZE * inputSize * inputSize * PIXEL_SIZE)
             .order(nativeOrder())

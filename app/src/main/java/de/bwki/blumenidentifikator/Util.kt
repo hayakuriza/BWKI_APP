@@ -56,4 +56,4 @@ fun AssetManager.loadLabelList(labelPath: String): List<String> {
     return labelList
 }
 
-class TextItemViewHolder(val textView: TextView): RecyclerView.ViewHolder(textView)
+class TextItemViewHolder(val textView: TextView) : RecyclerView.ViewHolder(textView)

@@ -14,7 +14,7 @@ import de.bwki.blumenidentifikator.MainActivity.GlobalMethods
 
 // Hier steht die ganze Logik
 
-class MainScreenModel(application: Application): AndroidViewModel(application), GlobalMethods{
+class MainScreenModel(application: Application) : AndroidViewModel(application), GlobalMethods {
 
     private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
     private val REQUEST_CODE = 10
@@ -32,22 +32,22 @@ class MainScreenModel(application: Application): AndroidViewModel(application), 
     fun startCamera(): Preview {
         // Config Object
         val previewConfig = PreviewConfig.Builder().apply {
-            setTargetAspectRatio(Rational(1,1))
-            setTargetResolution(Size(640,640))
+            setTargetAspectRatio(Rational(1, 1))
+            setTargetResolution(Size(640, 640))
         }.build()
 
         return Preview(previewConfig)
-        }
+    }
 
     fun cameraStart2(): ImageCaptureConfig {
         return ImageCaptureConfig.Builder().apply {
-            setTargetAspectRatio(Rational(1,1))
+            setTargetAspectRatio(Rational(1, 1))
             setCaptureMode(ImageCapture.CaptureMode.MIN_LATENCY)
             setTargetResolution(Size(224, 224))
         }.build()
     }
 
-    fun checkFirstStart(): Boolean{
+    fun checkFirstStart(): Boolean {
         return (!getPrefs().getBoolean("firstStart", false))
     }
 }

@@ -63,6 +63,42 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/progressBar3" android:scrollbarStyle="outsideInset"
                         android:visibility="gone" android:max="100" android:progress="@{resultScreenModel.progress3}"/>
+
+	            <TextView
+		            android:id="@+id/result_object_4"
+		            style="@style/ResultText"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:text="@{resultScreenModel.resultText4}"
+		            android:visibility="gone" />
+
+	            <ProgressBar
+		            android:id="@+id/progressBar4"
+		            style="?android:attr/progressBarStyleHorizontal"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:max="100"
+		            android:progress="@{resultScreenModel.progress4}"
+		            android:scrollbarStyle="outsideInset"
+		            android:visibility="gone" />
+
+	            <TextView
+		            android:id="@+id/result_object_5"
+		            style="@style/ResultText"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:text="@{resultScreenModel.resultText5}"
+		            android:visibility="gone" />
+
+	            <ProgressBar
+		            android:id="@+id/progressBar5"
+		            style="?android:attr/progressBarStyleHorizontal"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:max="100"
+		            android:progress="@{resultScreenModel.progress5}"
+		            android:scrollbarStyle="outsideInset"
+		            android:visibility="gone" />
             </LinearLayout>
         </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>

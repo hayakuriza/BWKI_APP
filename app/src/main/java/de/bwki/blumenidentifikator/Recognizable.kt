@@ -13,7 +13,7 @@ data class Recognizable(
     var name: String = "",
     var confidence: Float = 0F
 ) {
-  override fun toString(): String {
+    override fun toString(): String {
         return "Label Id = $id, Name = $name, Confidence = $confidence"
     }
 }

@@ -2,6 +2,7 @@ package de.bwki.blumenidentifikator
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -19,7 +20,6 @@ import androidx.navigation.ui.NavigationUI.onNavDestinationSelected
 import com.google.android.material.snackbar.Snackbar
 import de.bwki.blumenidentifikator.databinding.FragmentMainScreenBinding
 import java.io.File
-import android.graphics.Rect
 
 /**
  * Main Screen
@@ -27,7 +27,7 @@ import android.graphics.Rect
  *
  */
 
-class MainScreenFragment: Fragment(), MainActivity.GlobalMethods {
+class MainScreenFragment : Fragment(), MainActivity.GlobalMethods {
 
     private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
     private val REQUEST_CODE = 10
@@ -71,11 +71,12 @@ class MainScreenFragment: Fragment(), MainActivity.GlobalMethods {
             viewFinder.surfaceTexture = it.surfaceTexture
         }
 
-        binding.focusButton.setOnClickListener{
+        binding.focusButton.setOnClickListener {
             // TODO: understand Dimensions of the sensor coordinate frame and focus on center
             // TODO Anvanced: focus on area tapped by user
-            preview.focus(Rect(0,0,0,0),Rect(0,0,0,0))
-            Log.e("focus_button","focus!")        }
+            preview.focus(Rect(0, 0, 0, 0), Rect(0, 0, 0, 0))
+            Log.e("focus_button", "focus!")
+        }
 
         // Schieße Bild und schicke es an ResultFragment
         // TODO:?? Bild so abspeichern, dass es um 90 Grad gedreht ist?
@@ -83,24 +84,24 @@ class MainScreenFragment: Fragment(), MainActivity.GlobalMethods {
         binding.imageButton.setOnClickListener {
             val file = File(context?.filesDir, "image.jpg")
             imageCapture.takePicture(file,
-            object : ImageCapture.OnImageSavedListener {
-                override fun onError(
-                    error: ImageCapture.UseCaseError,
-                    message: String, exc: Throwable?
-                ) {
-                    val msg = "Photo capture failed: $message"
-                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
-                    Log.e("CameraXApp", msg)
-                    exc?.printStackTrace()
-                }
+                object : ImageCapture.OnImageSavedListener {
+                    override fun onError(
+                        error: ImageCapture.UseCaseError,
+                        message: String, exc: Throwable?
+                    ) {
+                        val msg = "Photo capture failed: $message"
+                        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+                        Log.e("CameraXApp", msg)
+                        exc?.printStackTrace()
+                    }
 
-                override fun onImageSaved(file: File) {
-                    val msg = "Photo capture succeeded: ${file.absolutePath}"
-                    Log.d("CameraXApp", msg)
-                    var bundle = bundleOf("file" to file.absolutePath)
-                    findNavController().navigate(R.id.action_mainScreenFragment_to_resultFragment, bundle)
-                }
-            })
+                    override fun onImageSaved(file: File) {
+                        val msg = "Photo capture succeeded: ${file.absolutePath}"
+                        Log.d("CameraXApp", msg)
+                        var bundle = bundleOf("file" to file.absolutePath)
+                        findNavController().navigate(R.id.action_mainScreenFragment_to_resultFragment, bundle)
+                    }
+                })
         }
 
         /* binding.imageButton.setOnClickListener {
@@ -141,10 +142,6 @@ class MainScreenFragment: Fragment(), MainActivity.GlobalMethods {
     override fun onDestroyView() {
         super.onDestroyView()
         CameraX.unbindAll()
-    }
-
-    override fun onStart() {
-        super.onStart()
     }
 
     // Für Overflow Menu

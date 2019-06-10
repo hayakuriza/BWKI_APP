@@ -1,3 +1,5 @@
+//  TODO: Quantized Model zum Laufen bringen
+
 package de.bwki.blumenidentifikator
 
 import android.graphics.Bitmap
@@ -7,14 +9,16 @@ import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
-class ResultScreenModel: ViewModel(), MainActivity.GlobalMethods, CoroutineScope{
+class ResultScreenModel : ViewModel(), MainActivity.GlobalMethods, CoroutineScope {
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
     override val coroutineContext: CoroutineContext
         get() = viewModelJob + Dispatchers.Default
 
-    private lateinit var imageClassification : ImageClassification
+    private lateinit var imageClassification: ImageClassification
     private lateinit var classifier: ImageClassifier
+    var numResults = getPrefs().getString("numResults", "3")?.toInt()
+    var confidenceThreshold = getPrefs().getFloat("confidenceThreshold", DEFAULT_CONFIDENCE_THRESHOLD)
 
     var resultText1 = MutableLiveData<String>()
     var progress1 = MutableLiveData<Int>()
@@ -24,7 +28,16 @@ class ResultScreenModel: ViewModel(), MainActivity.GlobalMethods, CoroutineScope
     var resultText3 = MutableLiveData<String>()
     var progress3 = MutableLiveData<Int>()
     var visibil3 = MutableLiveData<String>()
+    var resultText4 = MutableLiveData<String>()
+    var progress4 = MutableLiveData<Int>()
+    var visibil4 = MutableLiveData<String>()
+    var resultText5 = MutableLiveData<String>()
+    var progress5 = MutableLiveData<Int>()
+    var visibil5 = MutableLiveData<String>()
 
+    val visibilList = arrayOf(null, visibil2, visibil3, visibil4, visibil5)
+    val resultTextList = arrayOf(resultText1, resultText2, resultText3, resultText4, resultText5)
+    val progressList = arrayOf(progress1, progress2, progress3, progress4, progress5)
 
 
     val resultList = MutableLiveData<List<Recognizable>>()
@@ -44,6 +57,7 @@ class ResultScreenModel: ViewModel(), MainActivity.GlobalMethods, CoroutineScope
             done = true
         }
     }
+
     private suspend fun doSomethinginCoroutine(): Array<String>? {
         return withContext(Dispatchers.IO) {
             //do Something und gib Array/list zurück
@@ -60,43 +74,46 @@ class ResultScreenModel: ViewModel(), MainActivity.GlobalMethods, CoroutineScope
     init {
         visibil2.value = "GONE"
         visibil3.value = "GONE"
+        visibil4.value = "GONE"
+        visibil5.value = "GONE"
     }
 
-    fun loadModule(){
-            imageClassification = ImageClassification.create(
-                classifierModel = ClassifierModel.QUANTIZED,
-                assetManager = getAsset(),
-                modelPath = MODEL_FILE_PATH,
-                labelPath = LABELS_FILE_PATH
-            )
-        }
+    fun loadModule() {
+        numResults = getPrefs().getString("numResults", "3")!!.toInt()
+        confidenceThreshold =
+            getPrefs().getString("confidenceThreshold", DEFAULT_CONFIDENCE_THRESHOLD.toString())!!.toFloat()
+        imageClassification = ImageClassification.create(
+            classifierModel = ClassifierModel.QUANTIZED,
+            assetManager = getAsset(),
+            modelPath = MODEL_FILE_PATH,
+            labelPath = LABELS_FILE_PATH,
+            confidenceThreshold = confidenceThreshold,
+            numberOfResults = numResults!!
+        )
+    }
 
-    fun loadModule2(){
+    fun loadModule2() {
         classifier = ImageClassifier(getAsset())
     }
 
 
-    fun classify(bitmap:Bitmap) = launch {
+    fun classify(bitmap: Bitmap) = launch {
         val results = async { imageClassification.classifyImage(bitmap) }
         var done = false
 
         Log.d("Results", results.await().toString())
-        withContext(Dispatchers.Main){
-         //   resultText.value = results.await().toString()
-         //   resultList.value = results.await()
-            resultText1.value = results.await()[0].toString()
-            progress1.value = (results.await()[0].confidence * 100).toInt()
-
-            Log.d("Results", results.await().size.toString())
-            if (results.await().size > 1){
-                resultText2.value = results.await()[1].toString()
-                progress2.value = (results.await()[1].confidence * 100).toInt()
-                visibil2.value = "VISIBLE"
-            }; if (results.await().size > 2) {
-                resultText3.value = results.await()[2].toString()
-                progress3.value = (results.await()[2].confidence * 100).toInt()
-                visibil3.value = "VISIBLE"
-             }
+        withContext(Dispatchers.Main) {
+            //   resultText.value = results.await().toString()
+            //   resultList.value = results.await()
+            for (i in 0 until results.await().size) {
+                Log.d("ResultNum", i.toString())
+                Log.d("ResultText", resultTextList[i].toString())
+                resultTextList[i].postValue(results.await()[i].name + " " + (results.await()[i].confidence * 100).toInt())
+                progressList[i].postValue((results.await()[i].confidence * 100).toInt())
+                if (i > 0) {
+                    visibilList[i]!!.postValue("VISIBLE")
+                }
+            }
             done = true
         }
     }

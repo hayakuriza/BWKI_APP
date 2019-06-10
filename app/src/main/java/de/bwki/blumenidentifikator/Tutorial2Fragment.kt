@@ -27,7 +27,7 @@ class Tutorial2Fragment : Fragment(), MainActivity.GlobalMethods {
         val binding: FragmentTutorial2Binding = inflate(inflater, R.layout.fragment_tutorial2, container, false)
         lockDrawer()
 
-        binding.buttonFinish.setOnClickListener{view: View ->
+        binding.buttonFinish.setOnClickListener { view: View ->
             //Hier werden alle Einstellungen auf ihre Standardwerte gesetzt,
             // da diese Methode nur ein einziges Mal aufgerufen wird
             getPrefs().edit().putBoolean("firstStart", true).apply()
@@ -35,11 +35,11 @@ class Tutorial2Fragment : Fragment(), MainActivity.GlobalMethods {
             requestPermissions(arrayOf(Manifest.permission.CAMERA), 10)
         }
 
-        binding.buttonZurueck.setOnClickListener{
+        binding.buttonZurueck.setOnClickListener {
             NavigationUI.navigateUp(findNavController(), drawerLayout)
         }
         return binding.root
-        }
+    }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)

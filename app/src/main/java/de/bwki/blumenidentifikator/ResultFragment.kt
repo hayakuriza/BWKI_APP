@@ -21,7 +21,7 @@ import de.bwki.blumenidentifikator.databinding.FragmentResultBinding
  *
  */
 
-class ResultFragment : Fragment(), MainActivity.GlobalMethods{
+class ResultFragment : Fragment(), MainActivity.GlobalMethods {
 
     lateinit var viewModel: ResultScreenModel
     private lateinit var classifier: ImageClassifier
@@ -68,7 +68,7 @@ class ResultFragment : Fragment(), MainActivity.GlobalMethods{
             }
         )*/
 
-        
+
 //        val adapter = ResultScreenAdapter()
 //        binding.resultList.adapter = adapter
 //        viewModel.res
@@ -78,9 +78,9 @@ class ResultFragment : Fragment(), MainActivity.GlobalMethods{
 //            }
 //        })
 
-       // viewModel.resultText.observe(this, Observer { result ->
-       //     binding.resultObject.text = result.toString()
-       // })
+        // viewModel.resultText.observe(this, Observer { result ->
+        //     binding.resultObject.text = result.toString()
+        // })
 
         viewModel.visibil2.observe(this, Observer { visibil2 ->
             if (visibil2 == "VISIBLE") {
@@ -92,7 +92,7 @@ class ResultFragment : Fragment(), MainActivity.GlobalMethods{
             }
         })
 
-        viewModel.visibil3.observe(this, Observer {visibil3 ->
+        viewModel.visibil3.observe(this, Observer { visibil3 ->
             if (visibil3 == "VISIBLE") {
                 binding.progressBar3.visibility = ProgressBar.VISIBLE
                 binding.resultObject3.visibility = ProgressBar.VISIBLE
@@ -102,12 +102,30 @@ class ResultFragment : Fragment(), MainActivity.GlobalMethods{
             }
         })
 
+        viewModel.visibil4.observe(this, Observer { visibil4 ->
+            if (visibil4 == "VISIBLE") {
+                binding.progressBar4.visibility = ProgressBar.VISIBLE
+                binding.resultObject4.visibility = ProgressBar.VISIBLE
+            } else {
+                binding.progressBar4.visibility = ProgressBar.GONE
+                binding.resultObject4.visibility = ProgressBar.GONE
+            }
+        })
+
+        viewModel.visibil5.observe(this, Observer { visibil5 ->
+            if (visibil5 == "VISIBLE") {
+                binding.progressBar5.visibility = ProgressBar.VISIBLE
+                binding.resultObject5.visibility = ProgressBar.VISIBLE
+            } else {
+                binding.progressBar5.visibility = ProgressBar.GONE
+                binding.resultObject5.visibility = ProgressBar.GONE
+            }
+        })
+
         return binding.root
     }
 
 
-
-    //TODO? Die Ergebnisse mithilfe eines RecyclerViews und Adapter anzeigen lassen?
     //TODO Falls Internetverbindung weitere Informationen über Blume aus dem Internet holen
     //TODO? Image Analysis  nutzen um Motiv einer Blume zu erkennen und dann an Klassifikator schicken?
 }

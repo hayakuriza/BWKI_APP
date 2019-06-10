@@ -12,9 +12,10 @@ class ResultScreenAdapter : RecyclerView.Adapter<TextItemViewHolder>() {
             field = value
             notifyDataSetChanged()
         }
+
     override fun getItemCount() = DEFAULT_MAX_RESULTS
 
-    override fun onBindViewHolder(holder: TextItemViewHolder, position: Int){
+    override fun onBindViewHolder(holder: TextItemViewHolder, position: Int) {
         val item = data[position]
         holder.textView.text = item.toString()
     }

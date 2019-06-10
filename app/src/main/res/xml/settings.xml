@@ -1,9 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!--suppress AndroidElementNotAllowed -->
-    <SwitchPreferenceCompat
-            android:defaultValue="true"
-            android:title="@string/weitere_infos" android:key="useInternetInfos"
-            android:summary="@string/useInternetInfos"/>
+	<PreferenceCategory
+		android:title="@string/allgemein"
+		app:key="allgemein_category">
+
+		<SwitchPreferenceCompat
+			android:defaultValue="true"
+			android:key="useInternetInfos"
+			android:summary="@string/useInternetInfos"
+			android:title="@string/weitere_infos" />
+		<ListPreference
+			android:defaultValue='"3"'
+			android:entries="@array/numResultSettingsStrings"
+			android:entryValues="@array/numResultsSettingsValue"
+			android:key="numResults"
+			android:summary="Default: 3"
+			android:title="Anzahl Ergebnisse" />
+		<EditTextPreference
+			android:defaultValue='"0.1"'
+			android:inputType="number|numberDecimal"
+			android:key="confidenceThreshold"
+			android:lineSpacingExtra="8sp"
+			android:selectAllOnFocus="true"
+			android:singleLine="true"
+			android:summary="Default: 0.1"
+			android:title="@string/Confidence_Threshold" />
+
+	</PreferenceCategory>
 </PreferenceScreen>

@@ -1,6 +1,7 @@
 package de.bwki.blumenidentifikator
 
 const val MODEL_FILE_PATH = "model.tflite"
+const val Q_MODEL_FILE_PATH = "q_model.tflite"
 const val LABELS_FILE_PATH = "labels.txt"
 const val MODEL_INPUT_NAME = "input"
 const val MODEL_OUTPUT_NAME = "final_result"
