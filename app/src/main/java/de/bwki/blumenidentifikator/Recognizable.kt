@@ -15,5 +15,6 @@ data class Recognizable(
 ) {
     override fun toString(): String {
         return "Label Id = $id, Name = $name, Confidence = $confidence"
+        //return "$name " + "%.2f".format(confidence * 100) + "%"
     }
 }

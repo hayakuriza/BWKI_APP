@@ -28,9 +28,8 @@ class MainActivity : AppCompatActivity() {
         @Suppress("UNUSED_VARIABLE")
         val binding = setContentView<ActivityMainBinding>(this, R.layout.activity_main)
         val navController = this.findNavController(R.id.coreNavHostFragment)
-        prefs = getPreferences(MODE_PRIVATE)
+        prefs = getSharedPreferences("de.bwki.blumenidentifikator_preferences",MODE_PRIVATE)
         asset = assets
-
 
         Log.i("MainActivity", "passed")
         drawerLayout = binding.drawerLayout

@@ -2,10 +2,12 @@
 
 package de.bwki.blumenidentifikator
 
+import android.app.Activity
 import android.graphics.Bitmap
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.preference.PreferenceManager
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
@@ -17,8 +19,6 @@ class ResultScreenModel : ViewModel(), MainActivity.GlobalMethods, CoroutineScop
 
     private lateinit var imageClassification: ImageClassification
     private lateinit var classifier: ImageClassifier
-    var numResults = getPrefs().getString("numResults", "3")?.toInt()
-    var confidenceThreshold = getPrefs().getFloat("confidenceThreshold", DEFAULT_CONFIDENCE_THRESHOLD)
 
     var resultText1 = MutableLiveData<String>()
     var progress1 = MutableLiveData<Int>()
@@ -79,16 +79,13 @@ class ResultScreenModel : ViewModel(), MainActivity.GlobalMethods, CoroutineScop
     }
 
     fun loadModule() {
-        numResults = getPrefs().getString("numResults", "3")!!.toInt()
-        confidenceThreshold =
-            getPrefs().getString("confidenceThreshold", DEFAULT_CONFIDENCE_THRESHOLD.toString())!!.toFloat()
         imageClassification = ImageClassification.create(
             classifierModel = ClassifierModel.QUANTIZED,
             assetManager = getAsset(),
-            modelPath = MODEL_FILE_PATH,
+            modelPath = getPrefs().getString("modelFile", "model.tflite")!!,
             labelPath = LABELS_FILE_PATH,
-            confidenceThreshold = confidenceThreshold,
-            numberOfResults = numResults!!
+            confidenceThreshold = getPrefs().getString("confidenceThreshold", DEFAULT_CONFIDENCE_THRESHOLD.toString())!!.toFloat(),
+            numberOfResults = getPrefs().getString("numResults", "3")!!.toInt()
         )
     }
 
@@ -108,7 +105,7 @@ class ResultScreenModel : ViewModel(), MainActivity.GlobalMethods, CoroutineScop
             for (i in 0 until results.await().size) {
                 Log.d("ResultNum", i.toString())
                 Log.d("ResultText", resultTextList[i].toString())
-                resultTextList[i].postValue(results.await()[i].name + " " + (results.await()[i].confidence * 100).toInt())
+                resultTextList[i].postValue(results.await()[i].name + " " + "%.2f".format(results.await()[i].confidence * 100) + "%")
                 progressList[i].postValue((results.await()[i].confidence * 100).toInt())
                 if (i > 0) {
                     visibilList[i]!!.postValue("VISIBLE")
