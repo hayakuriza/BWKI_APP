@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "399393932253",
+    "firebase_url": "https://blumenidentifikator.firebaseio.com",
+    "project_id": "blumenidentifikator",
+    "storage_bucket": "blumenidentifikator.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:399393932253:android:0361c75c24dd2ba0",
+        "android_client_info": {
+          "package_name": "de.bwki.blumenidentifikator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "399393932253-hnmnk1d6cf0dkt8ugsfle9ura7qmdpcm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "de.bwki.blumenidentifikator",
+            "certificate_hash": "4b2331d806351c5695806a5373bb71b367867fa3"
+          }
+        },
+        {
+          "client_id": "399393932253-j9c9k5e299vv2pelkt37plmla0oqn95u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDocUTzaBHXkr0fOVH2RZUDn4Rmz66qZkk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "399393932253-j9c9k5e299vv2pelkt37plmla0oqn95u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

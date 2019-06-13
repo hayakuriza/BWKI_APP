@@ -28,9 +28,12 @@ android {
     dataBinding {
         enabled = true
     }
-    aaptOptions{
+    aaptOptions {
         noCompress "tflite"
         noCompress "lite"
+    }
+    sourceSets {
+        main { res.srcDirs = ['src/main/res/drawable-v24/preview', 'src/main/res', 'src/main/res/22'] }
     }
 }
 
@@ -61,4 +64,10 @@ dependencies {
     implementation 'androidx.preference:preference-ktx:1.1.0-beta01'
     implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
     implementation "io.reactivex.rxjava2:rxkotlin:2.3.0"
+    implementation 'com.google.firebase:firebase-core:16.0.9'
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
+    implementation 'com.google.firebase:firebase-firestore-ktx:19.0.0'
 }
+
+apply plugin: 'com.google.gms.google-services'
+apply plugin : 'io.fabric'

@@ -25,6 +25,7 @@ class ResultFragment : Fragment(), MainActivity.GlobalMethods {
 
     lateinit var viewModel: ResultScreenModel
     private lateinit var classifier: ImageClassifier
+    private var part: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,6 +59,10 @@ class ResultFragment : Fragment(), MainActivity.GlobalMethods {
         binding.imageView.setImageBitmap(bitmapResized)
         viewModel.classify(bitmapResized)
 
+        val imageViewList =
+            arrayOf(binding.imageView2, binding.imageView3, binding.imageView4, binding.imageView5, binding.imageView6)
+
+        // imageViewList[2].setImageResource(R.drawable.`0`)
         binding.resultScreenModel = viewModel
         binding.lifecycleOwner = this
 
@@ -82,7 +87,12 @@ class ResultFragment : Fragment(), MainActivity.GlobalMethods {
         //     binding.resultObject.text = result.toString()
         // })
 
+        viewModel.part.observe(this, Observer {
+            part = it
+        })
+
         viewModel.visibil2.observe(this, Observer { visibil2 ->
+            Log.d("ResultFragment", "visible changed")
             if (visibil2 == "VISIBLE") {
                 binding.progressBar2.visibility = ProgressBar.VISIBLE
                 binding.resultObject2.visibility = ProgressBar.VISIBLE
@@ -122,9 +132,14 @@ class ResultFragment : Fragment(), MainActivity.GlobalMethods {
             }
         })
 
+        viewModel.imageView.observe(this, Observer {
+            imageViewList[part].setImageResource(it)
+        })
+
+
+
         return binding.root
     }
-
 
     //TODO Falls Internetverbindung weitere Informationen über Blume aus dem Internet holen
     //TODO? Image Analysis  nutzen um Motiv einer Blume zu erkennen und dann an Klassifikator schicken?
