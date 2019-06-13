@@ -151,7 +151,7 @@ class ResultScreenModel : ViewModel(), MainActivity.GlobalMethods, CoroutineScop
         visibil3.value = "GONE"
         visibil4.value = "GONE"
         visibil5.value = "GONE"
-ü    }
+    }
 
     fun loadModule() {
         imageClassification = ImageClassification.create(
