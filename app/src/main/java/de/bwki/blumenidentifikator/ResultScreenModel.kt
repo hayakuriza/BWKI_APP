@@ -19,7 +19,6 @@ class ResultScreenModel : ViewModel(), MainActivity.GlobalMethods, CoroutineScop
         get() = viewModelJob + Dispatchers.Default
 
     private lateinit var imageClassification: ImageClassification
-    private lateinit var classifier: ImageClassifier
     var numResults = getPrefs().getString("numResults", "3")?.toInt()
     var confidenceThreshold = getPrefs().getString("confidenceThreshold", "$DEFAULT_CONFIDENCE_THRESHOLD")?.toFloat()
     val db = FirebaseFirestore.getInstance()
@@ -162,10 +161,6 @@ class ResultScreenModel : ViewModel(), MainActivity.GlobalMethods, CoroutineScop
             confidenceThreshold = confidenceThreshold!!,
             numberOfResults = numResults!!
         )
-    }
-
-    fun loadModule2() {
-        classifier = ImageClassifier(getAsset())
     }
 
 

@@ -24,7 +24,6 @@ import de.bwki.blumenidentifikator.databinding.FragmentResultBinding
 class ResultFragment : Fragment(), MainActivity.GlobalMethods {
 
     lateinit var viewModel: ResultScreenModel
-    private lateinit var classifier: ImageClassifier
     private var part: Int = 0
 
     override fun onCreateView(
@@ -35,7 +34,6 @@ class ResultFragment : Fragment(), MainActivity.GlobalMethods {
             DataBindingUtil.inflate(inflater, R.layout.fragment_result, container, false)
         val viewModel = ViewModelProviders.of(this).get(ResultScreenModel::class.java)
         viewModel.loadModule()
-        viewModel.loadModule2()
 
 
         Log.d("ResultFragment", "OnCreateView called")
@@ -65,14 +63,6 @@ class ResultFragment : Fragment(), MainActivity.GlobalMethods {
         // imageViewList[2].setImageResource(R.drawable.`0`)
         binding.resultScreenModel = viewModel
         binding.lifecycleOwner = this
-
-/*        classifier = ImageClassifier(getAsset())
-        classifier.recognizeImage(bitmapResized).subscribeBy(
-            onSuccess = {
-                binding.resultObject.text = it.toString()
-            }
-        )*/
-
 
 //        val adapter = ResultScreenAdapter()
 //        binding.resultList.adapter = adapter
