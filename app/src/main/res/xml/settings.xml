@@ -19,7 +19,7 @@
 			android:summary="Default: 3"
 			android:title="Anzahl Ergebnisse" />
 		<EditTextPreference
-			android:defaultValue='"0.1"'
+			android:defaultValue="0.1"
 			android:inputType="number|numberDecimal"
 			android:key="confidenceThreshold"
 			android:lineSpacingExtra="8sp"
@@ -27,6 +27,12 @@
 			android:singleLine="true"
 			android:summary="Default: 0.1"
 			android:title="@string/Confidence_Threshold" />
+		<ListPreference
+			android:defaultValue='"model_095"'
+			android:entries="@array/modelNames"
+			android:entryValues="@array/modelFiles"
+			android:key="modelFile"
+			android:title="Model" />
 
 	</PreferenceCategory>
 </PreferenceScreen>

@@ -2,6 +2,7 @@
 
 package de.bwki.blumenidentifikator
 
+import android.app.Activity
 import android.graphics.Bitmap
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
@@ -150,17 +151,13 @@ class ResultScreenModel : ViewModel(), MainActivity.GlobalMethods, CoroutineScop
         visibil3.value = "GONE"
         visibil4.value = "GONE"
         visibil5.value = "GONE"
-        updateDatabase()
-    }
+ü    }
 
     fun loadModule() {
-        numResults = getPrefs().getString("numResults", "3")!!.toInt()
-        confidenceThreshold =
-            getPrefs().getString("confidenceThreshold", DEFAULT_CONFIDENCE_THRESHOLD.toString())!!.toFloat()
         imageClassification = ImageClassification.create(
             classifierModel = ClassifierModel.QUANTIZED,
             assetManager = getAsset(),
-            modelPath = MODEL_FILE_PATH,
+            modelPath = getPrefs().getString("modelFile", "model.tflite")!!,
             labelPath = LABELS_FILE_PATH,
             confidenceThreshold = confidenceThreshold!!,
             numberOfResults = numResults!!
@@ -175,15 +172,13 @@ class ResultScreenModel : ViewModel(), MainActivity.GlobalMethods, CoroutineScop
     fun classify(bitmap: Bitmap) = launch {
         val results = async { imageClassification.classifyImage(bitmap) }
         var done = false
-        //  var imageResource = R.drawable.`0`
 
         Log.d("Results", results.await().toString())
         withContext(Dispatchers.Main) {
             for (i in 0 until results.await().size) {
                 Log.d("ResultNum", i.toString())
                 Log.d("ResultText", resultTextList[i].toString())
-                part.value = i
-                resultTextList[i].postValue(results.await()[i].name + "\n" + (results.await()[i].confidence * 100).toInt() + "%")
+                resultTextList[i].postValue(results.await()[i].name + " " + (results.await()[i].confidence * 100).toInt())
                 progressList[i].postValue((results.await()[i].confidence * 100).toInt())
                 //   imageView.value = imagePreview[(results.await()[i].id).toInt()]
 

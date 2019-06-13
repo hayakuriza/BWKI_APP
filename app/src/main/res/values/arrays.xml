@@ -15,4 +15,14 @@
 		<item>4</item>
 		<item>5</item>
 	</string-array>
+
+	<string-array name="modelNames">
+		<item>model_095</item>
+		<item>model_q</item>
+	</string-array>
+
+	<string-array name="modelFiles">
+		<item>"model.tflite"</item>
+		<item>"model_q.tflite"</item>
+	</string-array>
 </resources>
