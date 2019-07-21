@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -54,6 +55,7 @@ class ResultFragment : Fragment(), MainActivity.GlobalMethods {
             false
         )
 
+
         binding.imageView.setImageBitmap(bitmapResized)
         viewModel.classify(bitmapResized)
 
@@ -86,9 +88,11 @@ class ResultFragment : Fragment(), MainActivity.GlobalMethods {
             if (visibil2 == "VISIBLE") {
                 binding.progressBar2.visibility = ProgressBar.VISIBLE
                 binding.resultObject2.visibility = ProgressBar.VISIBLE
+                binding.imageView3.visibility = ImageView.VISIBLE
             } else {
                 binding.progressBar2.visibility = ProgressBar.GONE
                 binding.resultObject2.visibility = ProgressBar.GONE
+                binding.imageView3.visibility = ImageView.GONE
             }
         })
 
@@ -96,9 +100,12 @@ class ResultFragment : Fragment(), MainActivity.GlobalMethods {
             if (visibil3 == "VISIBLE") {
                 binding.progressBar3.visibility = ProgressBar.VISIBLE
                 binding.resultObject3.visibility = ProgressBar.VISIBLE
+                binding.imageView4.visibility = ImageView.VISIBLE
+
             } else {
                 binding.progressBar3.visibility = ProgressBar.GONE
                 binding.resultObject3.visibility = ProgressBar.GONE
+                binding.imageView4.visibility = ImageView.GONE
             }
         })
 
@@ -106,9 +113,12 @@ class ResultFragment : Fragment(), MainActivity.GlobalMethods {
             if (visibil4 == "VISIBLE") {
                 binding.progressBar4.visibility = ProgressBar.VISIBLE
                 binding.resultObject4.visibility = ProgressBar.VISIBLE
+                binding.imageView5.visibility = ImageView.VISIBLE
+
             } else {
                 binding.progressBar4.visibility = ProgressBar.GONE
                 binding.resultObject4.visibility = ProgressBar.GONE
+                binding.imageView5.visibility = ImageView.GONE
             }
         })
 
@@ -116,9 +126,12 @@ class ResultFragment : Fragment(), MainActivity.GlobalMethods {
             if (visibil5 == "VISIBLE") {
                 binding.progressBar5.visibility = ProgressBar.VISIBLE
                 binding.resultObject5.visibility = ProgressBar.VISIBLE
+                binding.imageView6.visibility = ImageView.VISIBLE
+
             } else {
                 binding.progressBar5.visibility = ProgressBar.GONE
                 binding.resultObject5.visibility = ProgressBar.GONE
+                binding.imageView6.visibility = ImageView.GONE
             }
         })
 

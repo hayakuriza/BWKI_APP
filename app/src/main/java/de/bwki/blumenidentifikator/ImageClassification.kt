@@ -2,7 +2,11 @@ package de.bwki.blumenidentifikator
 
 import android.content.res.AssetManager
 import android.graphics.Bitmap
+import android.os.SystemClock
+import android.os.Trace
+import android.util.Log
 import org.tensorflow.lite.Interpreter
+import org.tensorflow.lite.gpu.GpuDelegate
 import java.nio.ByteBuffer
 import java.nio.ByteOrder.nativeOrder
 
@@ -27,21 +31,34 @@ abstract class ImageClassification protected constructor(
     val confidenceThreshold: Float
 ) {
     protected val imageByteBuffer: ByteBuffer by lazy {
-        // ByteBuffer.allocateDirect(byteNumbersPerChannel() * BATCH_SIZE * inputSize * inputSize * PIXEL_SIZE)
-        //    .order(nativeOrder())
         ByteBuffer.allocateDirect(byteNumbersPerChannel() * BATCH_SIZE * inputSize * inputSize * PIXEL_SIZE)
             .order(nativeOrder())
     }
 
     //TODO Typ anpassen?
     fun classifyImage(bitmap: Bitmap): List<Recognizable> {
+        Trace.beginSection("recognizeImage")
+
+        Trace.beginSection("convertBitmap")
         convertBitmapToByteBuffer(bitmap)
+        Trace.endSection()
+
+        // Run Interpreter
+        Trace.beginSection("runInterpreter")
+        val startTime: Long = SystemClock.uptimeMillis()
         runInterpreter()
+        val endTime: Long = SystemClock.uptimeMillis()
+        Trace.endSection()
+        Log.v("Model", "Timecost for Classification:" + (endTime - startTime))
         return getResult()
     }
 
     //Close interpreter
     fun close() {
+        if (gpuDelegate != null) {
+            gpuDelegate?.close()
+            gpuDelegate = null
+        }
         interpreter.close()
     }
 
@@ -110,8 +127,11 @@ abstract class ImageClassification protected constructor(
          * [interpreterOptions] the options that will be used by [Interpreter].
          * [numberOfResults] the number of results to show.
          * [confidenceThreshold] the threshold confidence, [classifyImage] will return results whose confidence more than this value.
+         * [device] what device config to be used
+         * [numThreads] number of threads to be sued
          *
          */
+        var gpuDelegate: GpuDelegate? = null
         fun create(
             classifierModel: ClassifierModel,
             assetManager: AssetManager,
@@ -120,16 +140,34 @@ abstract class ImageClassification protected constructor(
             inputSize: Int = DEFAULT_INPUT_SIZE,
             interpreterOptions: Interpreter.Options = Interpreter.Options(),
             numberOfResults: Int = DEFAULT_MAX_RESULTS,
-            confidenceThreshold: Float = DEFAULT_CONFIDENCE_THRESHOLD
+            confidenceThreshold: Float = DEFAULT_CONFIDENCE_THRESHOLD,
+            device: Device = Device.CPU,
+            numThreads: Int = NUM_THREADS
         ): ImageClassification {
+
+            when (device) {
+                Device.NNAPI -> interpreterOptions.setUseNNAPI(true)
+                Device.GPU -> {
+                    gpuDelegate = GpuDelegate()
+                    interpreterOptions.addDelegate(gpuDelegate)
+                }
+                Device.CPU -> {
+                }
+            }
+            interpreterOptions.setNumThreads(numThreads)
 
             val interpreter = Interpreter(
                 assetManager.loadModelFile(modelPath),
                 interpreterOptions
             )
 
+            Log.d(
+                "TFModel",
+                "Created Classifier with" + device.toString() + "Type:" + classifierModel.toString()
+            )
+
             return when (classifierModel) {
-                ClassifierModel.QUANTIZED -> FloatClassifier(
+                ClassifierModel.QUANTIZED -> QuantizedClassifier(
                     interpreter = interpreter,
                     labelList = assetManager.loadLabelList(labelPath),
                     inputSize = inputSize,

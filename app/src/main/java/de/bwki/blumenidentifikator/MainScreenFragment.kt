@@ -73,13 +73,14 @@ class MainScreenFragment : Fragment(), MainActivity.GlobalMethods {
 
         binding.focusButton.setOnClickListener {
             // TODO: understand Dimensions of the sensor coordinate frame and focus on center
-            // TODO Anvanced: focus on area tapped by user
+            // TODO Advanced: focus on area tapped by user
             preview.focus(Rect(0, 0, 0, 0), Rect(0, 0, 0, 0))
             Log.e("focus_button", "focus!")
         }
 
         // Schieße Bild und schicke es an ResultFragment
         // TODO:?? Bild so abspeichern, dass es um 90 Grad gedreht ist?
+        // TODO: Möglichkeit, mehrere Bilder zu machen
         val imageCapture = ImageCapture(viewModel.cameraStart2())
         binding.imageButton.setOnClickListener {
             val file = File(context?.filesDir, "image.jpg")

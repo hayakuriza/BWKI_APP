@@ -13,6 +13,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import com.parse.Parse
 import de.bwki.blumenidentifikator.databinding.ActivityMainBinding
 
 // Drawer
@@ -38,6 +39,14 @@ class MainActivity : AppCompatActivity() {
         // Drawer Config
         appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
         NavigationUI.setupWithNavController(binding.navView, navController)
+
+        Parse.initialize(
+            Parse.Configuration.Builder(this)
+                .applicationId("k6uZC17WtPcnUvcZV6g5D6hYIEXDrj6oGg0eIEDd")
+                .clientKey("hdQ2JZyMpUvYj8dfXJAxXomkU9C2ZtCQPYU18Tvc")
+                .server("https://parseapi.back4app.com")
+                .build()
+        )
     }
 
     override fun onSupportNavigateUp(): Boolean {

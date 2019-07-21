@@ -2,7 +2,13 @@ package de.bwki.blumenidentifikator
 
 import android.graphics.RectF
 
-class Result(val id: String?, val title: String?, val confidence: Float?, private var location: RectF?) {
+class Result(
+    val id: String?,
+    val title: String?,
+    val confidence: Float?,
+    val wissName: String?,
+    private var location: RectF?
+) {
     override fun toString(): String {
         var resultString = ""
         if (id != null) resultString += "[$id] "
