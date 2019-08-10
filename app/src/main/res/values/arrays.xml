@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string-array name="numResultsSettingsValue">
+	<string-array name="numResultsEntries">
 		<item>1</item>
 		<item>2</item>
 		<item>3</item>
@@ -8,7 +8,7 @@
 		<item>5</item>
 	</string-array>
 
-	<string-array name="numResultSettingsStrings">
+	<string-array name="numResultSettingsEntry_Values">
 		<item>1</item>
 		<item>2</item>
 		<item>3</item>

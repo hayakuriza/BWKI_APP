@@ -1,4 +1,4 @@
-package de.bwki.blumenidentifikator
+package bwki.deepblossom.blumenidentifikator.tutorial
 
 
 import android.os.Bundle
@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil.inflate
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import de.bwki.blumenidentifikator.databinding.FragmentTutorial1Binding
+import bwki.deepblossom.blumenidentifikator.MainActivity
+import bwki.deepblossom.blumenidentifikator.R
+import bwki.deepblossom.blumenidentifikator.databinding.FragmentTutorial1Binding
 
 
 /**
@@ -17,13 +19,17 @@ import de.bwki.blumenidentifikator.databinding.FragmentTutorial1Binding
  * Wird angezeigt, wenn die App zum ersten Mal gestartet wird. Am Ende des Tutorials soll die Permission für die Kamera
  * abgefragt werden.
  */
-class Tutorial1Fragment : Fragment(), MainActivity.GlobalMethods {
+class Tutorial1Fragment : Fragment(),
+    MainActivity.GlobalMethods {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding: FragmentTutorial1Binding = inflate(inflater, R.layout.fragment_tutorial1, container, false)
+        val binding: FragmentTutorial1Binding = inflate(
+            inflater,
+            R.layout.fragment_tutorial1, container, false
+        )
         lockDrawer()
 
         binding.buttonNext.setOnClickListener { view: View ->

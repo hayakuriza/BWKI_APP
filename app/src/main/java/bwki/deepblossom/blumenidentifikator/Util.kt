@@ -1,4 +1,4 @@
-package de.bwki.blumenidentifikator
+package bwki.deepblossom.blumenidentifikator
 
 /*
  * Copyright 2019 Ahmed Gamal. All Rights Reserved.
@@ -22,7 +22,7 @@ import androidx.recyclerview.widget.RecyclerView
 import java.io.*
 import java.nio.MappedByteBuffer
 import java.nio.channels.FileChannel
-import java.util.PriorityQueue
+import java.util.*
 import kotlin.collections.ArrayList
 
 fun <T> priorityQueue(capacity: Int, block: (Comparator<T>)) =

@@ -1,4 +1,4 @@
-package de.bwki.blumenidentifikator
+package bwki.deepblossom.blumenidentifikator.mainscreen
 
 import android.app.Application
 import androidx.lifecycle.ViewModel

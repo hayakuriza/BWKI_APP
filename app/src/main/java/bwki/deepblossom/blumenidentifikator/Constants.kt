@@ -1,4 +1,4 @@
-package de.bwki.blumenidentifikator
+package bwki.deepblossom.blumenidentifikator
 
 const val MODEL_FILE_PATH = "model.tflite"
 const val Q_MODEL_FILE_PATH = "q_model.tflite"

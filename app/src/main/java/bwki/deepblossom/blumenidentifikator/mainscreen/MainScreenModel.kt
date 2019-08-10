@@ -1,4 +1,4 @@
-package de.bwki.blumenidentifikator
+package bwki.deepblossom.blumenidentifikator.mainscreen
 
 import android.Manifest
 import android.app.Application
@@ -10,7 +10,7 @@ import androidx.camera.core.ImageCaptureConfig
 import androidx.camera.core.Preview
 import androidx.camera.core.PreviewConfig
 import androidx.lifecycle.AndroidViewModel
-import de.bwki.blumenidentifikator.MainActivity.GlobalMethods
+import bwki.deepblossom.blumenidentifikator.MainActivity.GlobalMethods
 
 // Hier steht die ganze Logik
 

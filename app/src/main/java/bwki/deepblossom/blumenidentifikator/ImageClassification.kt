@@ -1,7 +1,8 @@
-package de.bwki.blumenidentifikator
+package bwki.deepblossom.blumenidentifikator
 
 import android.content.res.AssetManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.SystemClock
 import android.os.Trace
 import android.util.Log
@@ -28,7 +29,8 @@ abstract class ImageClassification protected constructor(
     val labelList: List<String>,
     val inputSize: Int,
     val numberOfResults: Int,
-    val confidenceThreshold: Float
+    val confidenceThreshold: Float,
+    val wissLabelList: List<String>
 ) {
     protected val imageByteBuffer: ByteBuffer by lazy {
         ByteBuffer.allocateDirect(byteNumbersPerChannel() * BATCH_SIZE * inputSize * inputSize * PIXEL_SIZE)
@@ -36,7 +38,14 @@ abstract class ImageClassification protected constructor(
     }
 
     //TODO Typ anpassen?
-    fun classifyImage(bitmap: Bitmap): List<Recognizable> {
+    fun classifyImage(bitmapFile: String): List<Result> {
+        val bitmap = Bitmap.createScaledBitmap(
+            BitmapFactory.decodeFile(bitmapFile),
+            DEFAULT_INPUT_SIZE,
+            DEFAULT_INPUT_SIZE,
+            false
+        )
+
         Trace.beginSection("recognizeImage")
 
         Trace.beginSection("convertBitmap")
@@ -49,7 +58,8 @@ abstract class ImageClassification protected constructor(
         runInterpreter()
         val endTime: Long = SystemClock.uptimeMillis()
         Trace.endSection()
-        Log.v("Model", "Timecost for Classification:" + (endTime - startTime))
+        Log.e("Model", "Timecost for Classification : " + (endTime - startTime))
+
         return getResult()
     }
 
@@ -92,21 +102,23 @@ abstract class ImageClassification protected constructor(
         }
     }
 
-    private fun getResult(): List<Recognizable> {
-        val priorityQueue = priorityQueue<Recognizable>(
-            numberOfResults,
-            Comparator { o1, o2 ->
-                o2.confidence.compareTo(o1.confidence)
-            })
+    private fun getResult(): List<Result> {
+        val priorityQueue =
+            priorityQueue<Result>(
+                numberOfResults,
+                Comparator { o1, o2 ->
+                    o2.confidence.compareTo(o1.confidence)
+                })
 
         labelList.forEachIndexed { index, label ->
             val confidence = normalizedProbability(index)
             if (confidence > confidenceThreshold) {
                 priorityQueue.add(
-                    Recognizable(
+                    Result(
                         id = index.toString(),
                         name = if (labelList.size > index) label else "unknown",
-                        confidence = confidence
+                        confidence = confidence,
+                        wissName = if (wissLabelList.size > index) wissLabelList[index] else "unknown"
                     )
                 )
             }
@@ -137,6 +149,7 @@ abstract class ImageClassification protected constructor(
             assetManager: AssetManager,
             modelPath: String = MODEL_FILE_PATH,
             labelPath: String = LABELS_FILE_PATH,
+            wissLabelPath: String = LABELS_FILE_PATH_WISS,
             inputSize: Int = DEFAULT_INPUT_SIZE,
             interpreterOptions: Interpreter.Options = Interpreter.Options(),
             numberOfResults: Int = DEFAULT_MAX_RESULTS,
@@ -172,14 +185,16 @@ abstract class ImageClassification protected constructor(
                     labelList = assetManager.loadLabelList(labelPath),
                     inputSize = inputSize,
                     numberOfResults = numberOfResults,
-                    confidenceThreshold = confidenceThreshold
+                    confidenceThreshold = confidenceThreshold,
+                    wissLabelList = assetManager.loadLabelList(wissLabelPath)
                 )
                 ClassifierModel.FLOAT -> FloatClassifier(
                     interpreter = interpreter,
                     labelList = assetManager.loadLabelList(labelPath),
                     inputSize = inputSize,
                     numberOfResults = numberOfResults,
-                    confidenceThreshold = confidenceThreshold
+                    confidenceThreshold = confidenceThreshold,
+                    wissLabelList = assetManager.loadLabelList(wissLabelPath)
                 )
             }
         }
@@ -194,8 +209,16 @@ private class QuantizedClassifier(
     labelList: List<String>,
     inputSize: Int,
     numberOfResults: Int,
-    confidenceThreshold: Float
-) : ImageClassification(interpreter, labelList, inputSize, numberOfResults, confidenceThreshold) {
+    confidenceThreshold: Float,
+    wissLabelList: List<String>
+) : ImageClassification(
+    interpreter,
+    labelList,
+    inputSize,
+    numberOfResults,
+    confidenceThreshold,
+    wissLabelList
+) {
 
     private val labelResults = Array(1) { ByteArray(labelList.size) }
 
@@ -226,8 +249,16 @@ private class FloatClassifier(
     labelList: List<String>,
     inputSize: Int,
     numberOfResults: Int,
-    confidenceThreshold: Float
-) : ImageClassification(interpreter, labelList, inputSize, numberOfResults, confidenceThreshold) {
+    confidenceThreshold: Float,
+    wissLabelList: List<String>
+) : ImageClassification(
+    interpreter,
+    labelList,
+    inputSize,
+    numberOfResults,
+    confidenceThreshold,
+    wissLabelList
+) {
 
     private val labelResults = Array(1) { FloatArray(labelList.size) }
 

@@ -8,6 +8,35 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:399393932253:android:752ef802c754c4b6",
+        "android_client_info": {
+          "package_name": "bwki.deepblossom.blumenidentifikator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "399393932253-j9c9k5e299vv2pelkt37plmla0oqn95u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDocUTzaBHXkr0fOVH2RZUDn4Rmz66qZkk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "399393932253-j9c9k5e299vv2pelkt37plmla0oqn95u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:399393932253:android:0361c75c24dd2ba0",
         "android_client_info": {
           "package_name": "de.bwki.blumenidentifikator"

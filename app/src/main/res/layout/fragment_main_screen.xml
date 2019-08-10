@@ -6,13 +6,13 @@
 	<data>
 		<variable
 			name="mainScreenModel"
-			type="de.bwki.blumenidentifikator.MainScreenModel" />
+			type="bwki.deepblossom.blumenidentifikator.mainscreen.MainScreenModel" />
 	</data>
 
 	<androidx.constraintlayout.widget.ConstraintLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		tools:context=".MainScreenFragment">
+		tools:context="bwki.deepblossom.blumenidentifikator.mainscreen.MainScreenFragment">
 
 
 		<TextureView
@@ -23,26 +23,7 @@
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toTopOf="parent"
-			app:layout_constraintVertical_bias="0.084" />
-
-		<ImageButton
-			android:id="@+id/imageButton"
-			android:layout_width="103dp"
-			android:layout_height="96dp"
-			android:layout_marginStart="8dp"
-			android:layout_marginTop="24dp"
-			android:layout_marginEnd="8dp"
-			android:layout_marginBottom="32dp"
-			android:background="@drawable/ic_launcher_background"
-			android:contentDescription="@string/take_picture"
-			android:cropToPadding="false"
-			android:scaleType="fitCenter"
-			app:layout_constraintBottom_toBottomOf="parent"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/view_finder"
-			app:layout_constraintVertical_bias="0.453"
-			app:srcCompat="@drawable/photo_camera" />
+			app:layout_constraintVertical_bias="0.029" />
 
 		<Button
 			android:id="@+id/focusButton"
@@ -57,7 +38,48 @@
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toTopOf="parent"
-			app:layout_constraintVertical_bias="0.086" />
+			app:layout_constraintVertical_bias="0.03" />
+
+		<ImageButton
+			android:id="@+id/imageButton"
+			android:layout_width="103dp"
+			android:layout_height="96dp"
+			android:layout_marginStart="72dp"
+			android:layout_marginTop="24dp"
+			android:layout_marginBottom="32dp"
+			android:background="@drawable/ic_launcher_background"
+			android:contentDescription="@string/take_picture"
+			android:cropToPadding="false"
+			android:scaleType="fitCenter"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/view_finder"
+			app:layout_constraintVertical_bias="0.306"
+			app:srcCompat="@drawable/photo_camera" />
+
+		<Button
+			android:id="@+id/button2"
+			android:layout_width="96dp"
+			android:layout_height="80dp"
+			android:layout_marginTop="61dp"
+			android:layout_marginBottom="156dp"
+			android:text="@string/str_fertig"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintHorizontal_bias="0.5"
+			app:layout_constraintStart_toEndOf="@+id/imageButton"
+			app:layout_constraintTop_toBottomOf="@+id/view_finder"
+			app:layout_constraintVertical_bias="0.483" />
+
+		<TextView
+			android:id="@+id/numberPictures_text"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/numberPictures"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/button2" />
 
 
 	</androidx.constraintlayout.widget.ConstraintLayout>

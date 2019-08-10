@@ -1,4 +1,4 @@
-package de.bwki.blumenidentifikator
+package bwki.deepblossom.blumenidentifikator.mainscreen
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -13,12 +13,17 @@ import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI.onNavDestinationSelected
+import bwki.deepblossom.blumenidentifikator.MainActivity
+import bwki.deepblossom.blumenidentifikator.R
+import bwki.deepblossom.blumenidentifikator.databinding.FragmentMainScreenBinding
+import bwki.deepblossom.blumenidentifikator.res
 import com.google.android.material.snackbar.Snackbar
-import de.bwki.blumenidentifikator.databinding.FragmentMainScreenBinding
 import java.io.File
 
 /**
@@ -27,7 +32,8 @@ import java.io.File
  *
  */
 
-class MainScreenFragment : Fragment(), MainActivity.GlobalMethods {
+class MainScreenFragment : Fragment(),
+    MainActivity.GlobalMethods {
 
     private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
     private val REQUEST_CODE = 10
@@ -46,8 +52,10 @@ class MainScreenFragment : Fragment(), MainActivity.GlobalMethods {
                 container,
                 false
             )
+
         val application = requireNotNull(this.activity).application
-        val viewModelFactory = MainScreenModelFactory(application)
+        val viewModelFactory =
+            MainScreenModelFactory(application)
         setHasOptionsMenu(true) //Overflow Menu
 
 
@@ -82,8 +90,12 @@ class MainScreenFragment : Fragment(), MainActivity.GlobalMethods {
         // TODO:?? Bild so abspeichern, dass es um 90 Grad gedreht ist?
         // TODO: Möglichkeit, mehrere Bilder zu machen
         val imageCapture = ImageCapture(viewModel.cameraStart2())
+        val bundle = bundleOf("numberPictures" to 0)
+        val numberPictures = MutableLiveData<Int>()
+        numberPictures.postValue(0)
+
         binding.imageButton.setOnClickListener {
-            val file = File(context?.filesDir, "image.jpg")
+            val file = File(context?.filesDir, "image$numberPictures.jpg")
             imageCapture.takePicture(file,
                 object : ImageCapture.OnImageSavedListener {
                     override fun onError(
@@ -99,39 +111,35 @@ class MainScreenFragment : Fragment(), MainActivity.GlobalMethods {
                     override fun onImageSaved(file: File) {
                         val msg = "Photo capture succeeded: ${file.absolutePath}"
                         Log.d("CameraXApp", msg)
-                        var bundle = bundleOf("file" to file.absolutePath)
-                        findNavController().navigate(R.id.action_mainScreenFragment_to_resultFragment, bundle)
+                        numberPictures.value!!.plus(1)
+                        bundle.putString("file$numberPictures", file.absolutePath)
+                        val current = numberPictures.value
+                        bundle.putInt("numberPicture", current!!)
                     }
                 })
         }
 
-        /* binding.imageButton.setOnClickListener {
-            imageCapture.takePicture(object : ImageCapture.OnImageCapturedListener() {
-                override fun onError(
-                    error: ImageCapture.UseCaseError,
-                    message: String, exc: Throwable?
-                ) {
-                    val msg = "Photo capture failed: $message"
-                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
-                    Log.e("CameraXApp", msg)
-                    exc?.printStackTrace()
-                }
-
-                override fun onCaptureSuccess(image: ImageProxy?, rotationDegrees: Int) {
-                    Log.d("CameraX", "Success")
-                    val buffer: ByteBuffer = image!!.image!!.planes[0].buffer
-                    val bytes = ByteArray(buffer.remaining())
-                    buffer.get(bytes)
-                    val bundle = Bundle()
-                    bundle.putParcelable("image", BitmapFactory.decodeByteArray(bytes,0,bytes.size))
-                   // val format = image.format
-                   // Log.e("CameraX", "Format: $format")
-                    findNavController().navigate(R.id.action_mainScreenFragment_to_resultFragment, bundle)
-                }
-            })
-        } */
+        binding.button2.setOnClickListener {
+            if (numberPictures.value != 0) {
+                findNavController().navigate(
+                    R.id.action_mainScreenFragment_to_resultFragment,
+                    bundle
+                )
+            } else {
+                Snackbar.make(
+                    activity!!.findViewById(android.R.id.content),
+                    "Bitte mache mindestens ein Bild",
+                    Snackbar.LENGTH_LONG
+                ).show()
+            }
+        }
 
         CameraX.bindToLifecycle(this, preview, imageCapture)
+
+        numberPictures.observe(viewLifecycleOwner, Observer {
+            binding.numberPicturesText.text =
+                String.format(res.getString(R.string.numberPictures), numberPictures.value)
+        })
 
         if (allPermissionsGranted()) {
             viewFinder.post { viewModel.startCamera() }
@@ -156,7 +164,8 @@ class MainScreenFragment : Fragment(), MainActivity.GlobalMethods {
                 || super.onOptionsItemSelected(item)
     }
 
-    fun allPermissionsGranted(): Boolean {
+
+    private fun allPermissionsGranted(): Boolean {
         for (permission in REQUIRED_PERMISSIONS) {
             if (ContextCompat.checkSelfPermission(this.context!!, permission) != PackageManager.PERMISSION_GRANTED) {
                 Snackbar.make(

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	xmlns:tools="http://schemas.android.com/tools">
+	xmlns:app="http://schemas.android.com/apk/res-auto">
 
 	<data>
 		<variable
 			name="resultScreenModel"
-			type="de.bwki.blumenidentifikator.ResultScreenModel" />
+			type="bwki.deepblossom.blumenidentifikator.resultscreen.ResultScreenModel" />
 
 	</data>
 
@@ -17,8 +16,8 @@
 		<ImageView
 			android:id="@+id/imageView"
 			style="@style/imageView"
-			android:layout_width="190dp"
-			android:layout_height="190dp"
+			android:layout_width="200dp"
+			android:layout_height="200dp"
 			android:layout_marginStart="8dp"
 			android:layout_marginTop="24dp"
 			android:layout_marginEnd="8dp"
@@ -26,267 +25,283 @@
 			android:contentDescription="@string/flower_image"
 			android:rotation="90"
 			android:scaleType="fitCenter"
-			app:layout_constraintBottom_toTopOf="@+id/scrollView2"
+			app:layout_constraintBottom_toTopOf="@+id/result_list_holder"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintHorizontal_bias="0.495"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toTopOf="parent"
 			app:srcCompat="@android:color/background_light" />
 
-		<ScrollView
-			android:id="@+id/scrollView2"
+		<androidx.recyclerview.widget.RecyclerView
+			android:id="@+id/result_list_holder"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
-			android:layout_marginStart="8dp"
-			android:layout_marginTop="24dp"
-			android:layout_marginEnd="8dp"
-			android:layout_marginBottom="8dp"
+			android:layout_marginTop="16dp"
+			app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintHorizontal_bias="1.0"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/imageView"
-			app:layout_constraintVertical_bias="1.0">
+			app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
-			<androidx.constraintlayout.widget.ConstraintLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:minWidth="900dp"
-				android:minHeight="900dp"
-				app:layout_constraintEnd_toStartOf="@+id/result_object_1"
-				app:layout_constraintStart_toStartOf="@+id/result_object_1">
-
-				<TextView
-					android:id="@+id/result_object_1"
-					style="@style/result_string"
-					android:layout_width="197dp"
-					android:layout_height="wrap_content"
-					android:layout_marginStart="8dp"
-					android:layout_marginBottom="8dp"
-					android:text="@{resultScreenModel.resultText1}"
-					app:layout_constraintBottom_toTopOf="@+id/progressBar1"
-					app:layout_constraintEnd_toEndOf="parent"
-					app:layout_constraintStart_toEndOf="@+id/imageView2"
-					app:layout_constraintTop_toTopOf="@+id/imageView2" />
-
-				<ProgressBar
-					android:id="@+id/progressBar1"
-					style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+		<!--		<ScrollView
+					android:id="@+id/scrollView2"
 					android:layout_width="0dp"
 					android:layout_height="wrap_content"
 					android:layout_marginStart="8dp"
-					android:max="100"
-					android:paddingBottom="16dp"
-					android:progress="@{resultScreenModel.progress1}"
-					android:scrollbarStyle="outsideInset"
-					android:visibility="visible"
-					app:layout_constraintEnd_toEndOf="parent"
-					app:layout_constraintStart_toEndOf="@+id/imageView2"
-					app:layout_constraintTop_toBottomOf="@+id/result_object_1" />
-
-				<ImageView
-					android:id="@+id/imageView2"
-					android:layout_width="190dp"
-					android:layout_height="190dp"
-					android:layout_marginTop="8dp"
-					app:layout_constraintEnd_toStartOf="@+id/result_object_1"
-					app:layout_constraintStart_toStartOf="parent"
-					app:layout_constraintTop_toTopOf="parent"
-					app:layout_constraintVertical_chainStyle="spread"
-					tools:srcCompat="@tools:sample/avatars" />
-
-				<TextView
-					android:id="@+id/result_object_2"
-					style="@style/result_string"
-					android:layout_width="197dp"
-					android:layout_height="57dp"
-					android:layout_marginStart="8dp"
-					android:minLines="2"
-					android:singleLine="false"
-					android:text="@{resultScreenModel.resultText2}"
-					android:visibility="gone"
-
-					app:layout_constraintEnd_toEndOf="parent"
-					app:layout_constraintStart_toEndOf="@+id/imageView3"
-					app:layout_constraintTop_toTopOf="@+id/imageView3" />
-
-				<ProgressBar
-					android:id="@+id/progressBar2"
-					style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-					android:layout_width="205dp"
-					android:layout_height="0dp"
-					android:layout_marginStart="8dp"
-					android:max="100"
-					android:paddingBottom="16dp"
-					android:progress="@{resultScreenModel.progress2}"
-					android:scrollbarStyle="outsideInset"
-					android:visibility="gone"
-
-					app:layout_constraintEnd_toEndOf="parent"
-					app:layout_constraintHorizontal_bias="0.0"
-					app:layout_constraintStart_toEndOf="@+id/imageView3"
-					app:layout_constraintTop_toBottomOf="@+id/result_object_2" />
-
-				<ImageView
-					android:id="@+id/imageView3"
-					android:layout_width="190dp"
-					android:layout_height="190dp"
-					android:layout_marginTop="8dp"
+					android:layout_marginTop="16dp"
+					android:layout_marginEnd="8dp"
 					android:layout_marginBottom="8dp"
-					android:visibility="gone"
-					app:layout_constraintBottom_toTopOf="@+id/imageView4"
-					app:layout_constraintEnd_toStartOf="@+id/result_object_2"
-					app:layout_constraintStart_toStartOf="parent"
-					app:layout_constraintTop_toBottomOf="@+id/imageView2"
-					tools:srcCompat="@tools:sample/avatars" />
-
-				<TextView
-					android:id="@+id/result_object_3"
-					style="@style/result_string"
-					android:layout_width="197dp"
-					android:layout_height="wrap_content"
-					android:layout_marginStart="8dp"
-					android:layout_marginBottom="10dp"
-					android:minLines="2"
-					android:singleLine="false"
-					android:text="@{resultScreenModel.resultText3}"
-					android:visibility="gone"
-					app:layout_constraintBottom_toTopOf="@+id/progressBar3"
-					app:layout_constraintEnd_toEndOf="parent"
-					app:layout_constraintStart_toEndOf="@+id/imageView4"
-					app:layout_constraintTop_toTopOf="@+id/imageView4" />
-
-				<ProgressBar
-					android:id="@+id/progressBar3"
-					style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-					android:layout_width="197dp"
-					android:layout_height="0dp"
-					android:layout_marginStart="8dp"
-					android:max="100"
-					android:paddingBottom="16dp"
-					android:progress="@{resultScreenModel.progress3}"
-					android:scrollbarStyle="outsideInset"
-					android:visibility="gone"
-
-					app:layout_constraintEnd_toEndOf="parent"
-					app:layout_constraintHorizontal_bias="0.0"
-					app:layout_constraintStart_toEndOf="@+id/imageView4"
-					app:layout_constraintTop_toBottomOf="@+id/result_object_3" />
-
-				<ImageView
-					android:id="@+id/imageView4"
-					android:layout_width="190dp"
-					android:layout_height="190dp"
-					android:layout_marginTop="8dp"
-					android:layout_marginBottom="8dp"
-					android:visibility="gone"
-					app:layout_constraintBottom_toTopOf="@+id/imageView5"
-					app:layout_constraintEnd_toStartOf="@+id/result_object_3"
-					app:layout_constraintStart_toStartOf="parent"
-					app:layout_constraintTop_toBottomOf="@+id/imageView3"
-					tools:srcCompat="@tools:sample/avatars" />
-
-				<TextView
-					android:id="@+id/result_object_4"
-					style="@style/result_string"
-					android:layout_width="197dp"
-					android:layout_height="wrap_content"
-					android:layout_marginStart="8dp"
-					android:minLines="2"
-					android:singleLine="false"
-					android:text="@{resultScreenModel.resultText4}"
-					android:visibility="gone"
-					app:layout_constraintBottom_toTopOf="@+id/progressBar4"
-					app:layout_constraintEnd_toEndOf="parent"
-					app:layout_constraintStart_toEndOf="@+id/imageView5"
-					app:layout_constraintTop_toTopOf="@+id/imageView5" />
-
-				<ProgressBar
-					android:id="@+id/progressBar4"
-					style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-					android:layout_width="197dp"
-					android:layout_height="wrap_content"
-					android:layout_marginStart="8dp"
-					android:max="100"
-					android:paddingBottom="16dp"
-					android:progress="@{resultScreenModel.progress4}"
-					android:scrollbarStyle="outsideInset"
-					android:visibility="gone"
-					app:layout_constraintEnd_toEndOf="parent"
-					app:layout_constraintHorizontal_bias="0.0"
-					app:layout_constraintStart_toEndOf="@+id/imageView5"
-					app:layout_constraintTop_toBottomOf="@+id/result_object_4" />
-
-				<ImageView
-					android:id="@+id/imageView5"
-					android:layout_width="190dp"
-					android:layout_height="190dp"
-					android:layout_marginTop="8dp"
-					android:layout_marginBottom="8dp"
-					android:visibility="gone"
-					app:layout_constraintBottom_toTopOf="@+id/imageView6"
-					app:layout_constraintEnd_toStartOf="@+id/progressBar4"
-					app:layout_constraintStart_toStartOf="parent"
-					app:layout_constraintTop_toBottomOf="@+id/imageView4"
-					tools:srcCompat="@tools:sample/avatars" />
-
-				<TextView
-					android:id="@+id/result_object_5"
-					style="@style/result_string"
-					android:layout_width="197dp"
-					android:layout_height="wrap_content"
-					android:layout_marginStart="8dp"
-					android:minLines="2"
-					android:singleLine="false"
-					android:text="@{resultScreenModel.resultText5}"
-					android:visibility="gone"
-					app:layout_constraintBottom_toTopOf="@+id/progressBar5"
-					app:layout_constraintEnd_toEndOf="parent"
-					app:layout_constraintStart_toEndOf="@+id/imageView6"
-					app:layout_constraintTop_toTopOf="@+id/imageView6" />
-
-				<ProgressBar
-					android:id="@+id/progressBar5"
-					style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-					android:layout_width="197dp"
-					android:layout_height="wrap_content"
-					android:layout_marginStart="8dp"
-					android:layout_marginBottom="120dp"
-					android:max="100"
-					android:paddingBottom="16dp"
-					android:progress="@{resultScreenModel.progress5}"
-					android:scrollbarStyle="outsideInset"
-					android:visibility="gone"
 					app:layout_constraintBottom_toBottomOf="parent"
 					app:layout_constraintEnd_toEndOf="parent"
-					app:layout_constraintStart_toEndOf="@+id/imageView6"
-					app:layout_constraintTop_toBottomOf="@+id/result_object_5" />
-
-				<ImageView
-					android:id="@+id/imageView6"
-					android:layout_width="190dp"
-					android:layout_height="190dp"
-					android:layout_marginTop="8dp"
-					android:layout_marginBottom="8dp"
-					android:visibility="gone"
-					app:layout_constraintBottom_toBottomOf="parent"
-					app:layout_constraintEnd_toStartOf="@+id/progressBar5"
+					app:layout_constraintHorizontal_bias="1.0"
 					app:layout_constraintStart_toStartOf="parent"
-					app:layout_constraintTop_toBottomOf="@+id/imageView5"
-					tools:srcCompat="@tools:sample/avatars" />
+					app:layout_constraintTop_toBottomOf="@+id/imageView"
+					app:layout_constraintVertical_bias="1.0">
 
-				<androidx.constraintlayout.widget.Group
-					android:id="@+id/group"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content" />
+					<androidx.constraintlayout.widget.ConstraintLayout
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:minWidth="900dp"
+						android:minHeight="900dp"
+						app:layout_constraintEnd_toStartOf="@+id/result_object_1"
+						app:layout_constraintStart_toStartOf="@+id/result_object_1">
 
-				<androidx.constraintlayout.widget.Barrier
-					android:id="@+id/barrier"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					app:barrierDirection="top" />
+						<TextView
+							android:id="@+id/result_object_1"
+							style="@style/result_string"
+							android:layout_width="0dp"
+							android:layout_height="wrap_content"
+							android:layout_marginStart="8dp"
+							android:layout_marginBottom="8dp"
+							android:lineSpacingExtra="8sp"
+							android:maxLines="5"
+							android:minLines="3"
+							android:scrollHorizontally="false"
+							android:text="@{resultScreenModel.resultText1}"
+							android:textAlignment="viewStart"
+							app:layout_constraintBottom_toTopOf="@+id/progressBar1"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintStart_toEndOf="@+id/imageView2"
+							app:layout_constraintTop_toTopOf="@+id/imageView2" />
 
-			</androidx.constraintlayout.widget.ConstraintLayout>
-		</ScrollView>
+						<ProgressBar
+							android:id="@+id/progressBar1"
+							style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+							android:layout_width="0dp"
+							android:layout_height="wrap_content"
+							android:layout_marginStart="8dp"
+							android:max="100"
+							android:paddingBottom="16dp"
+							android:progress="@{resultScreenModel.progress1}"
+							android:scrollbarStyle="outsideInset"
+							android:visibility="visible"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintStart_toEndOf="@+id/imageView2"
+							app:layout_constraintTop_toBottomOf="@+id/result_object_1" />
+
+						<ImageView
+							android:id="@+id/imageView2"
+							android:layout_width="160dp"
+							android:layout_height="160dp"
+							android:layout_marginTop="8dp"
+							app:layout_constraintEnd_toStartOf="@+id/result_object_1"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toTopOf="parent"
+							app:layout_constraintVertical_chainStyle="spread"
+							tools:srcCompat="@tools:sample/avatars" />
+
+						<TextView
+							android:id="@+id/result_object_2"
+							style="@style/result_string"
+							android:layout_width="0dp"
+							android:layout_height="wrap_content"
+							android:layout_marginStart="8dp"
+							android:minLines="2"
+							android:singleLine="false"
+							android:text="@{resultScreenModel.resultText2}"
+							android:visibility="gone"
+
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintStart_toEndOf="@+id/imageView3"
+							app:layout_constraintTop_toTopOf="@+id/imageView3" />
+
+						<ProgressBar
+							android:id="@+id/progressBar2"
+							style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+							android:layout_width="0dp"
+							android:layout_height="wrap_content"
+							android:layout_marginStart="8dp"
+							android:max="100"
+							android:paddingBottom="16dp"
+							android:progress="@{resultScreenModel.progress2}"
+							android:scrollbarStyle="outsideInset"
+							android:visibility="gone"
+
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintHorizontal_bias="0.0"
+							app:layout_constraintStart_toEndOf="@+id/imageView3"
+							app:layout_constraintTop_toBottomOf="@+id/result_object_2" />
+
+						<ImageView
+							android:id="@+id/imageView3"
+							android:layout_width="160dp"
+							android:layout_height="160dp"
+							android:layout_marginTop="8dp"
+							android:layout_marginBottom="8dp"
+							android:visibility="gone"
+							app:layout_constraintBottom_toTopOf="@+id/imageView4"
+							app:layout_constraintEnd_toStartOf="@+id/result_object_2"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@+id/imageView2"
+							tools:srcCompat="@tools:sample/avatars" />
+
+						<TextView
+							android:id="@+id/result_object_3"
+							style="@style/result_string"
+							android:layout_width="0dp"
+							android:layout_height="wrap_content"
+							android:layout_marginStart="8dp"
+							android:layout_marginBottom="10dp"
+							android:minLines="2"
+							android:singleLine="false"
+							android:text="@{resultScreenModel.resultText3}"
+							android:visibility="gone"
+							app:layout_constraintBottom_toTopOf="@+id/progressBar3"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintStart_toEndOf="@+id/imageView4"
+							app:layout_constraintTop_toTopOf="@+id/imageView4" />
+
+						<ProgressBar
+							android:id="@+id/progressBar3"
+							style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+							android:layout_width="0dp"
+							android:layout_height="wrap_content"
+							android:layout_marginStart="8dp"
+							android:max="100"
+							android:paddingBottom="16dp"
+							android:progress="@{resultScreenModel.progress3}"
+							android:scrollbarStyle="outsideInset"
+							android:visibility="gone"
+
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintHorizontal_bias="0.0"
+							app:layout_constraintStart_toEndOf="@+id/imageView4"
+							app:layout_constraintTop_toBottomOf="@+id/result_object_3" />
+
+						<ImageView
+							android:id="@+id/imageView4"
+							android:layout_width="160dp"
+							android:layout_height="160dp"
+							android:layout_marginTop="8dp"
+							android:layout_marginBottom="8dp"
+							android:visibility="gone"
+							app:layout_constraintBottom_toTopOf="@+id/imageView5"
+							app:layout_constraintEnd_toStartOf="@+id/result_object_3"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@+id/imageView3"
+							tools:srcCompat="@tools:sample/avatars" />
+
+						<TextView
+							android:id="@+id/result_object_4"
+							style="@style/result_string"
+							android:layout_width="0dp"
+							android:layout_height="wrap_content"
+							android:layout_marginStart="8dp"
+							android:minLines="2"
+							android:singleLine="false"
+							android:text="@{resultScreenModel.resultText4}"
+							android:visibility="gone"
+							app:layout_constraintBottom_toTopOf="@+id/progressBar4"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintStart_toEndOf="@+id/imageView5"
+							app:layout_constraintTop_toTopOf="@+id/imageView5" />
+
+						<ProgressBar
+							android:id="@+id/progressBar4"
+							style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+							android:layout_width="0dp"
+							android:layout_height="wrap_content"
+							android:layout_marginStart="8dp"
+							android:max="100"
+							android:paddingBottom="16dp"
+							android:progress="@{resultScreenModel.progress4}"
+							android:scrollbarStyle="outsideInset"
+							android:visibility="gone"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintHorizontal_bias="0.0"
+							app:layout_constraintStart_toEndOf="@+id/imageView5"
+							app:layout_constraintTop_toBottomOf="@+id/result_object_4" />
+
+						<ImageView
+							android:id="@+id/imageView5"
+							android:layout_width="160dp"
+							android:layout_height="160dp"
+							android:layout_marginTop="8dp"
+							android:layout_marginBottom="8dp"
+							android:visibility="gone"
+							app:layout_constraintBottom_toTopOf="@+id/imageView6"
+							app:layout_constraintEnd_toStartOf="@+id/progressBar4"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@+id/imageView4"
+							tools:srcCompat="@tools:sample/avatars" />
+
+						<TextView
+							android:id="@+id/result_object_5"
+							style="@style/result_string"
+							android:layout_width="0dp"
+							android:layout_height="wrap_content"
+							android:layout_marginStart="8dp"
+							android:minLines="2"
+							android:singleLine="false"
+							android:text="@{resultScreenModel.resultText5}"
+							android:visibility="gone"
+							app:layout_constraintBottom_toTopOf="@+id/progressBar5"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintStart_toEndOf="@+id/imageView6"
+							app:layout_constraintTop_toTopOf="@+id/imageView6" />
+
+						<ProgressBar
+							android:id="@+id/progressBar5"
+							style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+							android:layout_width="0dp"
+							android:layout_height="wrap_content"
+							android:layout_marginStart="8dp"
+							android:layout_marginBottom="120dp"
+							android:max="100"
+							android:paddingBottom="16dp"
+							android:progress="@{resultScreenModel.progress5}"
+							android:scrollbarStyle="outsideInset"
+							android:visibility="gone"
+							app:layout_constraintBottom_toBottomOf="parent"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintStart_toEndOf="@+id/imageView6"
+							app:layout_constraintTop_toBottomOf="@+id/result_object_5" />
+
+						<ImageView
+							android:id="@+id/imageView6"
+							android:layout_width="160dp"
+							android:layout_height="160dp"
+							android:layout_marginTop="8dp"
+							android:layout_marginBottom="8dp"
+							android:visibility="gone"
+							app:layout_constraintBottom_toBottomOf="parent"
+							app:layout_constraintEnd_toStartOf="@+id/progressBar5"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@+id/imageView5"
+							tools:srcCompat="@tools:sample/avatars" />
+
+						<androidx.constraintlayout.widget.Group
+							android:id="@+id/group"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content" />
+
+						<androidx.constraintlayout.widget.Barrier
+							android:id="@+id/barrier"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							app:barrierDirection="top" />
+
+					</androidx.constraintlayout.widget.ConstraintLayout>
+				</ScrollView>-->
 	</androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

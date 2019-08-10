@@ -1,43 +1,51 @@
-package de.bwki.blumenidentifikator
+package bwki.deepblossom.blumenidentifikator
 
-// TODO: Ändere Paketname zum Teamnamen
 // TODO: Aufräumen ._.
 
 import android.content.SharedPreferences
 import android.content.res.AssetManager
+import android.content.res.Resources
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil.setContentView
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import bwki.deepblossom.blumenidentifikator.databinding.ActivityMainBinding
 import com.parse.Parse
-import de.bwki.blumenidentifikator.databinding.ActivityMainBinding
 
 // Drawer
 private lateinit var drawerLayout: DrawerLayout
 private lateinit var appBarConfiguration: AppBarConfiguration
 private lateinit var prefs: SharedPreferences
 private lateinit var asset: AssetManager
+lateinit var res: Resources
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        @Suppress("UNUSED_VARIABLE")
-        val binding = setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+        val binding = setContentView<ActivityMainBinding>(
+            this,
+            R.layout.activity_main
+        )
         val navController = this.findNavController(R.id.coreNavHostFragment)
-        prefs = getSharedPreferences("de.bwki.blumenidentifikator_preferences",MODE_PRIVATE)
+        prefs = getSharedPreferences("de.bwki.blumenidentifikator_preferences", MODE_PRIVATE)
         asset = assets
+        res = resources
 
-        Log.i("MainActivity", "passed")
         drawerLayout = binding.drawerLayout
-        NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
+        NavigationUI.setupActionBarWithNavController(
+            this, navController,
+            drawerLayout
+        )
 
         // Drawer Config
-        appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
+        appBarConfiguration = AppBarConfiguration(
+            navController.graph,
+            drawerLayout
+        )
         NavigationUI.setupWithNavController(binding.navView, navController)
 
         Parse.initialize(
@@ -47,11 +55,15 @@ class MainActivity : AppCompatActivity() {
                 .server("https://parseapi.back4app.com")
                 .build()
         )
+
     }
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = this.findNavController(R.id.coreNavHostFragment)
-        return NavigationUI.navigateUp(navController, drawerLayout)
+        return NavigationUI.navigateUp(
+            navController,
+            drawerLayout
+        )
     }
 
     // Methoden für Fragments

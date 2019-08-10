@@ -2,7 +2,9 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools" android:id="@+id/navigation" app:startDestination="@id/mainScreenFragment">
-    <fragment android:id="@+id/mainScreenFragment" android:name="de.bwki.blumenidentifikator.MainScreenFragment"
+	<fragment
+		android:id="@+id/mainScreenFragment"
+		android:name="bwki.deepblossom.blumenidentifikator.mainscreen.MainScreenFragment"
               android:label="fragment_main_screen" tools:layout="@layout/fragment_main_screen">
         <action android:id="@+id/action_mainScreenFragment_to_tutorial1Fragment"
                 app:destination="@id/tutorial1Fragment" app:enterAnim="@anim/slide_in_right"
@@ -12,26 +14,35 @@
                 app:enterAnim="@anim/nav_default_enter_anim" app:exitAnim="@anim/nav_default_exit_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim" app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
     </fragment>
-    <fragment android:id="@+id/aboutFragment" android:name="de.bwki.blumenidentifikator.AboutFragment"
+	<fragment
+		android:id="@+id/aboutFragment"
+		android:name="bwki.deepblossom.blumenidentifikator.AboutFragment"
               android:label="fragment_about" tools:layout="@layout/fragment_about"/>
-    <fragment android:id="@+id/tutorial1Fragment" android:name="de.bwki.blumenidentifikator.Tutorial1Fragment"
+	<fragment
+		android:id="@+id/tutorial1Fragment"
+		android:name="bwki.deepblossom.blumenidentifikator.tutorial.Tutorial1Fragment"
               android:label="Tutorial1Fragment" tools:layout="@layout/fragment_tutorial1">
         <action android:id="@+id/action_tutorial1Fragment_to_tutorial2Fragment"
                 app:destination="@id/tutorial2Fragment" app:enterAnim="@anim/slide_in_right"
                 app:exitAnim="@anim/slide_in_left" app:popEnterAnim="@anim/slide_in_right"
                 app:popExitAnim="@anim/slide_in_left" app:popUpTo="@+id/tutorial1Fragment"/>
     </fragment>
-    <fragment android:id="@+id/tutorial2Fragment" android:name="de.bwki.blumenidentifikator.Tutorial2Fragment"
+	<fragment
+		android:id="@+id/tutorial2Fragment"
+		android:name="bwki.deepblossom.blumenidentifikator.tutorial.Tutorial2Fragment"
               android:label="Tutorial2Fragment" tools:layout="@layout/fragment_tutorial2">
         <action android:id="@+id/action_tutorial2Fragment_to_mainScreenFragment"
                 app:destination="@id/mainScreenFragment" app:enterAnim="@anim/slide_in_right"
                 app:exitAnim="@anim/slide_in_left" app:popEnterAnim="@anim/slide_in_right"
                 app:popExitAnim="@anim/slide_in_left"/>
     </fragment>
-    <fragment android:id="@+id/resultFragment" android:name="de.bwki.blumenidentifikator.ResultFragment"
-              android:label="ResultFragment" tools:layout="@layout/fragment_result">
-        <argument android:name="filePath" app:argType="string"/>
-    </fragment>
-    <fragment android:id="@+id/settingsFragment" android:name="de.bwki.blumenidentifikator.SettingsFragment"
+	<fragment
+		android:id="@+id/resultFragment"
+		android:name="bwki.deepblossom.blumenidentifikator.resultscreen.ResultFragment"
+		android:label="ResultFragment"
+		tools:layout="@layout/fragment_result" />
+	<fragment
+		android:id="@+id/settingsFragment"
+		android:name="bwki.deepblossom.blumenidentifikator.SettingsFragment"
               android:label="SettingsFragment"/>
 </navigation>

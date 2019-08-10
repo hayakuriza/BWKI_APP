@@ -15,9 +15,13 @@
     <string name="allgemein">Allgemeine Einstellungen</string>
     <string name="entryValue">1,2,3,4,5</string>
     <string name="Confidence_Threshold">Confidence Schwelle</string>
-    <string name="Kontakt">Die Entwickler kontaktieren</string>
+    <string name="Kontakt" translatable="false">Die Entwickler kontaktieren</string>
     <string name="Hilfe">Hilfe</string>
     <string name="take_picture">Bild machen</string>
     <string name="header">Header</string>
 	<string name="test_string">Hallo test est \\n hallo hallo</string>
+    <string name="name">Name: %1$s</string>
+    <string name="wissName">Wissenschaftlicher Name: %1$s</string>
+    <string name="confidence">Confidence: %1$s</string>
+    <string name="numberPictures">Anzahl der Bilder: %1$s</string>
 </resources>

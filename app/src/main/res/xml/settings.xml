@@ -12,12 +12,14 @@
 			android:summary="@string/useInternetInfos"
 			android:title="@string/weitere_infos" />
 		<ListPreference
-			android:defaultValue='"3"'
-			android:entries="@array/numResultSettingsStrings"
-			android:entryValues="@array/numResultsSettingsValue"
-			android:key="numResults"
-			android:summary="Default: 3"
-			android:title="Anzahl Ergebnisse" />
+			app:defaultValue='"3"'
+			app:dialogTitle="Wähle die Anzahl der Ergebnisse aus"
+			app:entries="@array/numResultsEntries"
+			app:entryValues="@array/numResultSettingsEntry_Values"
+			app:key="numResults"
+			app:summary="Default: 3"
+			app:title="Anzahl Ergebnisse"
+			app:useSimpleSummaryProvider="true" />
 		<EditTextPreference
 			android:defaultValue="0.1"
 			android:inputType="number|numberDecimal"
@@ -26,13 +28,18 @@
 			android:selectAllOnFocus="true"
 			android:singleLine="true"
 			android:summary="Default: 0.1"
-			android:title="@string/Confidence_Threshold" />
-		<ListPreference
-			android:defaultValue='"model_095"'
-			android:entries="@array/modelNames"
-			android:entryValues="@array/modelFiles"
-			android:key="modelFile"
-			android:title="Model" />
+			android:title="@string/Confidence_Threshold"
+			app:useSimpleSummaryProvider="true" />
+		<SwitchPreferenceCompat
+			android:defaultValue="false"
+			android:key="use_german"
+			android:title="@string/use_german_str" />
+		<!--		<ListPreference
+					android:defaultValue='"model_095"'
+					android:entries="@array/modelNames"
+					android:entryValues="@array/modelFiles"
+					android:key="modelFile"
+					android:title="Model" /> -->
 
 	</PreferenceCategory>
 </PreferenceScreen>
