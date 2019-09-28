@@ -13,6 +13,10 @@ import bwki.deepblossom.blumenidentifikator.Result
 import bwki.deepblossom.blumenidentifikator.res
 
 
+/**
+ * RecyclerView Klasse ist für die Anzeige der Ergebnisse verantwortlich.
+ */
+
 class ResultScreenAdapter : RecyclerView.Adapter<ResultScreenAdapter.ViewHolder>() {
     var data = listOf<Result>()
         set(value) {
@@ -37,7 +41,8 @@ class ResultScreenAdapter : RecyclerView.Adapter<ResultScreenAdapter.ViewHolder>
 
     class ViewHolder private constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        val imagePreview = mapOf<Int, Int>(
+        // Hier werden den IDs den Beispielbildern zugeordnet
+        private val imagePreview = mapOf(
             0 to R.drawable.alpineseaholly,
             1 to R.drawable.anthurium,
             2 to R.drawable.artichoke,
@@ -58,8 +63,9 @@ class ResultScreenAdapter : RecyclerView.Adapter<ResultScreenAdapter.ViewHolder>
             17 to R.drawable.buttercup,
             18 to R.drawable.californianpoppy,
             19 to R.drawable.camellia, // etwas ungenau
-            // 20 to canna lily // funktioniert nicht
+            20 to R.drawable.cannalily,
             21 to R.drawable.canterburybells,
+            22 to R.drawable.image_02063, // Dummy
             // 22 to capeflower // finde ich nicht
             23 to R.drawable.carnation, // Gattung
             24 to R.drawable.cautleyaspicata, // keine richtige klassifizierung
@@ -101,14 +107,17 @@ class ResultScreenAdapter : RecyclerView.Adapter<ResultScreenAdapter.ViewHolder>
             60 to R.drawable.monkshood, // etwas unzuverlässig // Gattung
             61 to R.drawable.moon_orchid,
             62 to R.drawable.morning_glory, // GROßE GATTUNG!!
+            63 to R.drawable.image_02063, // Dummy
             // 63 to orange dahlia find ich net
             64 to R.drawable.osteospermum, // es erkennt nur daisybush,eine Art von osteospermum // Gattung
             65 to R.drawable.oxeye_daisy,
             66 to R.drawable.passionflower, // Gattung
             67 to R.drawable.pelargonia, // Gattung
+            68 to R.drawable.image_02063, // Dummy
             // 68 to R.drawable.pervuvian lily, // Gattung
             69 to R.drawable.petunia, // Gattung
             70 to R.drawable.pincushionflower,
+            71 to R.drawable.image_02063, // Dummy
             // 71 to pinkyellowdahlia
             72 to R.drawable.pinkprimrose,
             73 to R.drawable.poinsettia,
@@ -127,6 +136,7 @@ class ResultScreenAdapter : RecyclerView.Adapter<ResultScreenAdapter.ViewHolder>
             86 to R.drawable.sunflower,
             87 to R.drawable.sweetpea,
             88 to R.drawable.sweetwilliam,
+            89 to R.drawable.image_02063, // Dummy
             // 89 to R.drawable.swordlily // Gattung
             90 to R.drawable.thornapple, // Nur Blütenform funktioniert
             91 to R.drawable.tigerlily, // unzuverlässig
@@ -142,11 +152,11 @@ class ResultScreenAdapter : RecyclerView.Adapter<ResultScreenAdapter.ViewHolder>
             101 to R.drawable.yellowiris
         )
 
-        val resultName: TextView = itemView.findViewById(R.id.result_name)
-        val resultWissName: TextView = itemView.findViewById(R.id.result_wissName)
-        val resultConf: TextView = itemView.findViewById(R.id.result_confidence)
-        val resultProgress: ProgressBar = itemView.findViewById(R.id.result_progress)
-        val resultPicture: ImageView = itemView.findViewById(R.id.result_picture)
+        private val resultName: TextView = itemView.findViewById(R.id.result_name)
+        private val resultWissName: TextView = itemView.findViewById(R.id.result_wissName)
+        private val resultConf: TextView = itemView.findViewById(R.id.result_confidence)
+        private val resultProgress: ProgressBar = itemView.findViewById(R.id.result_progress)
+        private val resultPicture: ImageView = itemView.findViewById(R.id.result_picture)
 
         fun bind(
             item: Result
@@ -160,7 +170,7 @@ class ResultScreenAdapter : RecyclerView.Adapter<ResultScreenAdapter.ViewHolder>
                 ), item.wissName
             ).replace("'", "")
             Log.d("ResultScreenAdapter", item.confidence.toString())
-            val confidence: String = (item.confidence * 100).toString() + "%"
+            val confidence: String = (item.confidence * 100).toInt().toString() + "%"
             resultConf.text = String.format(res.getString(R.string.confidence), confidence)
             resultProgress.progress = (item.confidence * 100).toInt()
 

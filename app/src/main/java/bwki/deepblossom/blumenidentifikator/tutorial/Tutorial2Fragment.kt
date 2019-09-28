@@ -33,7 +33,7 @@ class Tutorial2Fragment : Fragment(),
         )
         lockDrawer()
 
-        binding.buttonFinish.setOnClickListener { view: View ->
+        binding.buttonFinish.setOnClickListener {
             //Hier werden alle Einstellungen auf ihre Standardwerte gesetzt,
             // da dieses Fragment nur ein einziges Mal aufgerufen wird
             getPrefs().edit().putBoolean("firstStart", true).apply()

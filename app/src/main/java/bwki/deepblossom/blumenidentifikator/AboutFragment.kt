@@ -9,8 +9,7 @@ import androidx.fragment.app.Fragment
 
 
 /**
- * A simple [Fragment] subclass.
- *
+ * Die "Über diese App"-Klasse.
  */
 class AboutFragment : Fragment(), MainActivity.GlobalMethods {
     override fun onCreateView(

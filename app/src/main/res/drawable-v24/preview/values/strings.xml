@@ -2,4 +2,14 @@
 <resources>
 	<string name="str_fertig">Fertig</string>
 	<string name="use_german_str">Deutsche Namen verwenden?</string>
+	<string name="blumenbild">BlumenBild</string>
+	<string name="brauche_erlaubnis_f_r_kamera_blblabl">Brauche Erlaubnis für Kamera blblabl</string>
+	<string name="about">Über</string>
+	<string name="AboutHeader">Über diese App</string>
+	<string name="AboutText">Hallo! Diese App ist im Zuge der 2. Runde des Bundeswettbewer Künstliche Intelligenz enstanden. Dazu hat sich ein kleines Team von drei Personen zusammengefunden und ein neuronales Netz geschrieben, das Blumen identifizieren kann.</string>
+	<string name="AboutText2">"Das Netz ist weit davon entfernt perfekt zu sein, wie du wahrscheinlich schon bemerkt hast. Leider gab es in der Entwicklung teilweise sehr lange Ruhepausen, da jeder von uns mit privaten Dingen beschäftigt war und das Projekt dadurch das Nachsehen hatte. "</string>
+	<string name="AboutText3" />
+	<string name="AboutText4">Trotzdem kann ich wahrscheinlich für das ganze Team sagen, dass es uns einige Erfahrung in Künstlicher Intelligenz gebracht hat bzw. mir persönlich in die Android-Entwicklung, und es insgesamt eine spaßige Angelegenheit war. Das war\'s von unserer Seite \n ~ Team DeepBlossom</string>
+	<string name="tutText1">"Herzlichen Dank, dass du die App nutzt! Diese App ist im Zuge der 2. Runde des Bundeswettbewerbs Künstliche Intelligenz entstanden. Diese App kann mit Hilfe von Bildern eine Blume bestimmen. Dies ist über ein neuronales Netz möglich, das über Tensorflow Lite hier eingebaut ist. "</string>
+	<string name="tutText2">Damit das Netz eine halbwegs gute Erkennungsrate liefert, ist es wichtig nur die Blüte der Blume zu fotografieren, und dass diese scharf ist. Es kann auch sinnvoll sein, mehrmals dieselbe Blume zu fotografieren.\nDamit die App Zugriff auf die Kamera bekommt, wird gleich die Berechtigung abgefragt werden.\nDas Team DeepBlossom hofft, dass du viel Spaß mit der App haben wirst!</string>
 </resources>

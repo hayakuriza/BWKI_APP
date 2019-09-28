@@ -18,15 +18,12 @@ import bwki.deepblossom.blumenidentifikator.databinding.FragmentResultBinding
 
 /**
  * Hier werden die Ergebnisse des Netzes angezeigt.
- * Das Bild bekommt er vom MainScreenModel und wird hier verarbeitet.
- *
+ * Das Bild bekommt er vom MainScreenModel und wird dann bei ImageClassification verarbeitet.
  */
 
 class ResultFragment : Fragment(), MainActivity.GlobalMethods {
 
-    lateinit var viewModel: ResultScreenModel
-    private var part: Int = 0
-    lateinit var labelLang: String
+    private lateinit var labelLang: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,8 +42,8 @@ class ResultFragment : Fragment(), MainActivity.GlobalMethods {
         } else {
             LABELS_FILE_PATH
         }
+        Log.i("ResultFragment", "Label: $labelLang")
         viewModel.loadModule(labelLang)
-
 
         Log.d("ResultFragment", "OnCreateView called")
         setHasOptionsMenu(true)
@@ -55,14 +52,8 @@ class ResultFragment : Fragment(), MainActivity.GlobalMethods {
         // HINWEIS: ImageView ist um 90 Grad gedreht, um Bild gerade anzuzeigen.
         // HINWEIS: Bilder werden im Format YUV_422_888 gespeichert
 
-
         classify(arguments!!, viewModel, binding)
 
-
-/*        val imageViewList =
-            arrayOf(binding.imageView2, binding.imageView3, binding.imageView4, binding.imageView5, binding.imageView6)*/
-
-        // imageViewList[2].setImageResource(R.drawable.`0`)
         binding.resultScreenModel = viewModel
         binding.lifecycleOwner = this
 

@@ -14,12 +14,14 @@ package bwki.deepblossom.blumenidentifikator
  * limitations under the License.
  */
 
+/**
+ * Hilfsklasse um die Assets zu laden; leicht abgewandelt
+ */
 import android.content.res.AssetManager
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
-import java.io.*
+import java.io.BufferedReader
+import java.io.FileInputStream
+import java.io.IOException
+import java.io.InputStreamReader
 import java.nio.MappedByteBuffer
 import java.nio.channels.FileChannel
 import java.util.*
@@ -27,11 +29,6 @@ import kotlin.collections.ArrayList
 
 fun <T> priorityQueue(capacity: Int, block: (Comparator<T>)) =
     PriorityQueue<T>(capacity, block)
-
-fun ByteArray.toBitmap(): Bitmap {
-    val byteArrayInputString = ByteArrayInputStream(this)
-    return BitmapFactory.decodeStream(byteArrayInputString)
-}
 
 @Throws(IOException::class)
 fun AssetManager.loadModelFile(modelPath: String): MappedByteBuffer {
@@ -56,4 +53,3 @@ fun AssetManager.loadLabelList(labelPath: String): List<String> {
     return labelList
 }
 
-class TextItemViewHolder(val textView: TextView) : RecyclerView.ViewHolder(textView)

@@ -1,7 +1,5 @@
 package bwki.deepblossom.blumenidentifikator
 
-// TODO: Aufräumen ._.
-
 import android.content.SharedPreferences
 import android.content.res.AssetManager
 import android.content.res.Resources
@@ -12,15 +10,20 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import androidx.preference.PreferenceManager
 import bwki.deepblossom.blumenidentifikator.databinding.ActivityMainBinding
 import com.parse.Parse
 
-// Drawer
 private lateinit var drawerLayout: DrawerLayout
 private lateinit var appBarConfiguration: AppBarConfiguration
 private lateinit var prefs: SharedPreferences
 private lateinit var asset: AssetManager
 lateinit var res: Resources
+
+/**
+ * MainActivity
+ * Die ganze App nutzt diese Activity
+ */
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,7 +34,7 @@ class MainActivity : AppCompatActivity() {
             R.layout.activity_main
         )
         val navController = this.findNavController(R.id.coreNavHostFragment)
-        prefs = getSharedPreferences("de.bwki.blumenidentifikator_preferences", MODE_PRIVATE)
+        prefs = PreferenceManager.getDefaultSharedPreferences(this)
         asset = assets
         res = resources
 
@@ -46,6 +49,7 @@ class MainActivity : AppCompatActivity() {
             navController.graph,
             drawerLayout
         )
+
         NavigationUI.setupWithNavController(binding.navView, navController)
 
         Parse.initialize(
@@ -55,7 +59,6 @@ class MainActivity : AppCompatActivity() {
                 .server("https://parseapi.back4app.com")
                 .build()
         )
-
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -66,7 +69,6 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    // Methoden für Fragments
     interface GlobalMethods {
         fun getPrefs(): SharedPreferences {
             return prefs

@@ -12,7 +12,6 @@ import java.nio.ByteBuffer
 import java.nio.ByteOrder.nativeOrder
 
 
-//TODO Modeltype anpassen
 enum class ClassifierModel {
     FLOAT,
     QUANTIZED
@@ -24,20 +23,24 @@ enum class Device {
     GPU
 }
 
+/**
+ * Diese Klasse ist für die Klassifizierung verantwortlich.
+ * Hierfür wird TFLite verwendet
+ */
+
 abstract class ImageClassification protected constructor(
     val interpreter: Interpreter,
     val labelList: List<String>,
     val inputSize: Int,
     val numberOfResults: Int,
     val confidenceThreshold: Float,
-    val wissLabelList: List<String>
+    private val wissLabelList: List<String>
 ) {
     protected val imageByteBuffer: ByteBuffer by lazy {
         ByteBuffer.allocateDirect(byteNumbersPerChannel() * BATCH_SIZE * inputSize * inputSize * PIXEL_SIZE)
             .order(nativeOrder())
     }
 
-    //TODO Typ anpassen?
     fun classifyImage(bitmapFile: String): List<Result> {
         val bitmap = Bitmap.createScaledBitmap(
             BitmapFactory.decodeFile(bitmapFile),
@@ -61,15 +64,6 @@ abstract class ImageClassification protected constructor(
         Log.e("Model", "Timecost for Classification : " + (endTime - startTime))
 
         return getResult()
-    }
-
-    //Close interpreter
-    fun close() {
-        if (gpuDelegate != null) {
-            gpuDelegate?.close()
-            gpuDelegate = null
-        }
-        interpreter.close()
     }
 
     /**
@@ -137,27 +131,30 @@ abstract class ImageClassification protected constructor(
          * [labelList] the labels list name.
          * [inputSize] the size that is used in the model.
          * [interpreterOptions] the options that will be used by [Interpreter].
-         * [numberOfResults] the number of results to show.
-         * [confidenceThreshold] the threshold confidence, [classifyImage] will return results whose confidence more than this value.
-         * [device] what device config to be used
-         * [numThreads] number of threads to be sued
+         * [numberOfResults] the number of results to show (Optionn).
+         * [confidenceThreshold] the threshold confidence (wird über Option festgelgt),
+         * [classifyImage] will return results whose confidence more than this value.
+         * [device] what device config to be used -> ist noch festgelegt
+         * [numThreads] number of threads to be sued -> ist noch festgelegt
          *
          */
         var gpuDelegate: GpuDelegate? = null
+
         fun create(
             classifierModel: ClassifierModel,
             assetManager: AssetManager,
             modelPath: String = MODEL_FILE_PATH,
-            labelPath: String = LABELS_FILE_PATH,
+            labelPath: String,
             wissLabelPath: String = LABELS_FILE_PATH_WISS,
             inputSize: Int = DEFAULT_INPUT_SIZE,
             interpreterOptions: Interpreter.Options = Interpreter.Options(),
-            numberOfResults: Int = DEFAULT_MAX_RESULTS,
-            confidenceThreshold: Float = DEFAULT_CONFIDENCE_THRESHOLD,
+            numberOfResults: Int,
+            confidenceThreshold: Float,
             device: Device = Device.CPU,
             numThreads: Int = NUM_THREADS
         ): ImageClassification {
 
+            Log.e("ImageClassification", labelPath + numberOfResults + confidenceThreshold)
             when (device) {
                 Device.NNAPI -> interpreterOptions.setUseNNAPI(true)
                 Device.GPU -> {
@@ -202,7 +199,7 @@ abstract class ImageClassification protected constructor(
 }
 
 /**
- * A concrete implementation of [ImageClassification] of type [ClassifierModel.QUANTIZED].
+ * Implementation des QuantizedClassifier, Obsolet
  */
 private class QuantizedClassifier(
     interpreter: Interpreter,
@@ -242,7 +239,7 @@ private class QuantizedClassifier(
 }
 
 /**
- * A concrete implementation of [ImageClassification] of type [ClassifierModel.FLOAT].
+ * Implementation FloatClassifier.
  */
 private class FloatClassifier(
     interpreter: Interpreter,

@@ -1,25 +1,17 @@
 <resources>
     <string name="app_name">Blumenidentifikator</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="hello">Hello Fragment</string>
-    <string name="about">About</string>
     <string name="tut_text1">Vielen Dank, dass ihr diese App nutzt.... blablabla</string>
     <string name="next">Weiter</string>
     <string name="string_button_finish">Alles klar!</string>
     <string name="string_zurueck">Zurück</string>
-    <string name="permissiob_not_granted">Die App hat keine Berechtigung für die Kamera, bitte manuell in den App-Einstellungen erteilen.</string>
-    <string name="useInternetInfos">Sollen aus dem Internet weitere Informationen geladen werden?</string>
-    <string name="weitere_infos">Weitere Informationen laden?</string>
+    <string name="permissiob_not_granted">Die App hat keine Berechtigung für die Kamera, bitte manuell in den App-Einstellungen erteilen. Starte dann die App neu!</string>
     <string name="settings">Einstellungen</string>
     <string name="flower_image">Foto der Blume</string>
     <string name="allgemein">Allgemeine Einstellungen</string>
-    <string name="entryValue">1,2,3,4,5</string>
     <string name="Confidence_Threshold">Confidence Schwelle</string>
-    <string name="Kontakt" translatable="false">Die Entwickler kontaktieren</string>
-    <string name="Hilfe">Hilfe</string>
     <string name="take_picture">Bild machen</string>
     <string name="header">Header</string>
-	<string name="test_string">Hallo test est \\n hallo hallo</string>
     <string name="name">Name: %1$s</string>
     <string name="wissName">Wissenschaftlicher Name: %1$s</string>
     <string name="confidence">Confidence: %1$s</string>

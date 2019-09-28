@@ -1,5 +1,3 @@
-//  TODO: Quantized Model zum Laufen bringen
-
 package bwki.deepblossom.blumenidentifikator.resultscreen
 
 import android.os.Bundle
@@ -7,61 +5,36 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import bwki.deepblossom.blumenidentifikator.*
-import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
+
+/**
+ * Logik für ResultFragment
+ */
 
 class ResultScreenModel : ViewModel(),
     MainActivity.GlobalMethods, CoroutineScope {
     private var viewModelJob = Job()
-    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
     override val coroutineContext: CoroutineContext
         get() = viewModelJob + Dispatchers.Default
 
     private lateinit var imageClassification: ImageClassification
-    //   var numResults = getPrefs().getString("numResults", "3")?.toInt()
-    var numResults = 3
-    // var confidenceThreshold = getPrefs().getString("confidenceThreshold", "$DEFAULT_CONFIDENCE_THRESHOLD")?.toFloat()
-    var confidenceThreshold: Float = 0.1F
-    val db = FirebaseFirestore.getInstance()
+    private var numResults: Int = getPrefs().getString("numResults", "3")!!.toInt()
+    private var confidenceThreshold: Float =
+        getPrefs().getString("confidenceThreshold", "$DEFAULT_CONFIDENCE_THRESHOLD")!!.toFloat()
 
     var resultList = MutableLiveData<List<Result>>()
-
-    var done = false
-
-
-    // Beispiel für Coroutines
-    // TODO: Hier soll mit Coroutine das Bild ausgewertet werden. Zurückkommen soll eine List/Array
-    private fun startSomething() {
-        uiScope.launch {
-            // Do something
-            doSomethinginCoroutine()
-
-            done = true
-        }
-    }
-
-    private suspend fun doSomethinginCoroutine(): Array<String>? {
-        return withContext(Dispatchers.IO) {
-            //do Something und gib Array/list zurück
-            null
-        }
-    }
 
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
     }
 
-    init {
-
-    }
-
     fun loadModule(labelLang: String) {
         imageClassification =
             ImageClassification.create(
-                //TODO Quantized und Float unterscheiden (über Option)
-                // TODO Füge Option für Ändern des Devices (falls unterstützt) und Anzahl der Threads hinzu
+                //TODO Quantized und Float unterscheiden (über Option) ! Quantized funktioniert nicht, vermutlich Bug (TFLite ist im Alpha-Status)
+                //TODO Füge Option für Ändern des Devices (falls unterstützt) und Anzahl der Threads hinzu
                 classifierModel = ClassifierModel.FLOAT,
                 assetManager = getAsset(),
                 //   modelPath = getPrefs().getString("modelFile", "model.tflite")!!,
@@ -75,13 +48,12 @@ class ResultScreenModel : ViewModel(),
 
     // TODO: mehrere Bilder klassifizieren und Durchschnitt berechnen
     fun classify(bundle: Bundle) = launch {
-        val resultArray = mutableListOf<List<Result>>()
-        for (i in 1..bundle.getInt("numberPictures")) {
-            val results = async { imageClassification.classifyImage(bundle.getString("file$i")!!) }
-            resultArray.add(results.await())
-            Log.e("ResultScreenModel", "ResultArray: $resultArray")
-        }
-
+        //        val resultArray = mutableListOf<List<Result>>()
+//        for (i in 1..bundle.getInt("numberPictures")) {
+//            val results = async { imageClassification.classifyImage(bundle.getString("file$i")!!) }
+//            resultArray.add(results.await())
+//            Log.e("ResultScreenModel", "ResultArray: $resultArray")
+//        }
         val results = async { imageClassification.classifyImage(bundle.getString("file1")!!) }
         withContext(Dispatchers.Main) {
             Log.d("Results", results.await().toString())
@@ -89,6 +61,8 @@ class ResultScreenModel : ViewModel(),
         }
     }
 
+
+    // TODO: Parse Ergebnisse
 //    fun updateTrueDatabase(string: String) {
 //        val query = ParseQuery.getQuery<ParseObject>("Blumen")
 //        query.whereEqualTo("Blumenname", string)
@@ -112,4 +86,5 @@ class ResultScreenModel : ViewModel(),
 //            }
 //        }
 //    }
+
 }

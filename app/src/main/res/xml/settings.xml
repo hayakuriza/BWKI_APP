@@ -6,29 +6,24 @@
 		android:title="@string/allgemein"
 		app:key="allgemein_category">
 
-		<SwitchPreferenceCompat
-			android:defaultValue="true"
-			android:key="useInternetInfos"
-			android:summary="@string/useInternetInfos"
-			android:title="@string/weitere_infos" />
 		<ListPreference
-			app:defaultValue='"3"'
 			app:dialogTitle="Wähle die Anzahl der Ergebnisse aus"
 			app:entries="@array/numResultsEntries"
 			app:entryValues="@array/numResultSettingsEntry_Values"
 			app:key="numResults"
+			android:key="numResults"
 			app:summary="Default: 3"
 			app:title="Anzahl Ergebnisse"
 			app:useSimpleSummaryProvider="true" />
 		<EditTextPreference
-			android:defaultValue="0.1"
-			android:inputType="number|numberDecimal"
+			android:inputType="numberDecimal"
 			android:key="confidenceThreshold"
 			android:lineSpacingExtra="8sp"
 			android:selectAllOnFocus="true"
 			android:singleLine="true"
 			android:summary="Default: 0.1"
 			android:title="@string/Confidence_Threshold"
+			app:key="confidenceThreshold"
 			app:useSimpleSummaryProvider="true" />
 		<SwitchPreferenceCompat
 			android:defaultValue="false"

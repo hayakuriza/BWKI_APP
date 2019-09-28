@@ -1,6 +1,5 @@
 package bwki.deepblossom.blumenidentifikator.mainscreen
 
-import android.Manifest
 import android.app.Application
 import android.util.Log
 import android.util.Rational
@@ -12,12 +11,9 @@ import androidx.camera.core.PreviewConfig
 import androidx.lifecycle.AndroidViewModel
 import bwki.deepblossom.blumenidentifikator.MainActivity.GlobalMethods
 
-// Hier steht die ganze Logik
+// ViewModel; für Konfiguration der Kamera
 
 class MainScreenModel(application: Application) : AndroidViewModel(application), GlobalMethods {
-
-    private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
-    private val REQUEST_CODE = 10
 
     init {
         Log.i("MainScreenModel", "Model created")
