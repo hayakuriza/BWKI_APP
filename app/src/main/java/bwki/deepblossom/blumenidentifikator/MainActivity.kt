@@ -1,5 +1,7 @@
 package bwki.deepblossom.blumenidentifikator
 
+import android.app.Application
+import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.AssetManager
 import android.content.res.Resources
@@ -13,6 +15,10 @@ import androidx.navigation.ui.NavigationUI
 import androidx.preference.PreferenceManager
 import bwki.deepblossom.blumenidentifikator.databinding.ActivityMainBinding
 import com.parse.Parse
+import org.acra.ACRA
+import org.acra.annotation.AcraCore
+
+
 
 private lateinit var drawerLayout: DrawerLayout
 private lateinit var appBarConfiguration: AppBarConfiguration
@@ -59,6 +65,14 @@ class MainActivity : AppCompatActivity() {
                 .server("https://parseapi.back4app.com")
                 .build()
         )
+    }
+
+    @AcraCore(buildConfigClass = BuildConfig::class)
+    class MyActivity : Application() {
+        override fun attachBaseContext(base: Context) {
+            super.attachBaseContext(base)
+            ACRA.init(this)
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
